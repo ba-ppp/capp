@@ -41,6 +41,7 @@ const App = () => {
           },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
+          headerShown: false,
         })}>
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Camera" component={Camera} />
