@@ -9,6 +9,8 @@ from system.socket import *
 from system.generate_captions import *
 from config.config import path_config
 
+
+
 app = FastAPI()
 origins = [
     "*",
@@ -34,17 +36,17 @@ async def uploads(files: list[UploadFile], background_tasks: BackgroundTasks):
 # start generate captions
 @app.get('/generate')
 async def start_socket():
-    # user_id = str(uuid.uuid4())
-    user_id = 'abcd'
-    print('userid', user_id)
+    user_id = str(uuid.uuid4())
+    
+    print(f'User {user_id} connected!', user_id)
     client = connect_socket(user_id)
-    # client.loop_start()
-    print('connected')
+    client.loop_start()
     for image_file in os.listdir(path_config.get('static_path')):
         captions = generate_caption(image_file)
-        print(captions)
         publish(client, json.dumps(captions))
-        # return
+        return
+    # image_paths = os.listdir(path_config.get('static_path'))
+    # run_background_generate_captions(image_paths)
 
        
 

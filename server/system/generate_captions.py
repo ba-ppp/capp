@@ -5,8 +5,12 @@ from keras.models import load_model
 from .utils.model import *
 from .utils.process import generate_caption_beam_search
 from .utils.preprocess import extract_features
+from .utils.utils import *
 import os
 from config.config import path_config
+import asyncio
+from concurrent.futures import ProcessPoolExecutor
+from multiprocessing import Pool
 
 
 # Load the tokenizer
@@ -48,4 +52,20 @@ def generate_caption(image_file):
 
         captions_array.append(caption)
     return captions_array
+
+def run_with_multiple_workers(i):
+    # CPU core
+    image_paths = os.listdir(path_config.get('static_path'))
+    executor = ProcessPoolExecutor(10)
+    loop = asyncio.get_event_loop()
+    print('a', loop.run_in_executor(executor, generate_caption(image_paths[i])))
+    return loop.run_in_executor(executor, generate_caption(image_paths[i]))
+  
+
+def run_background_generate_captions(image_paths):
+    pool = Pool(processes=4)
+
+    # run all files at the same time
+    r = pool.map_async(run_with_multiple_workers, range(len(image_paths)))
+    print('b', r)
 
