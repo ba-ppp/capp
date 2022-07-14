@@ -48,7 +48,7 @@ export default function HomeNavBar() {
                                 <li
                                     onClick={() => handleChangeNav(1)}
                                 >
-                                    <NavLink to="/">Trang chủ</NavLink>
+                                    <NavLink to="/">Trang chủ chu chảng</NavLink>
                                 </li>
                                 <li
                                     onClick={() => handleChangeNav(4)}
