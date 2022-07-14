@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as StarIcon } from "asset/icons/star.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { ReactComponent as Admin } from "asset/icons/admin.svg";
 import { ReactComponent as Logout } from "asset/icons/logout.svg";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "app/store/store";
 
 export default function HomeNavBar() {
+    const dispatch = useDispatch();
+    const { isEnglish, textContent } = useSelector((state: RootState) => state.content)
+
     const [activeNav, setActiveNav] = useState(1);
+
+    const en = 0;
+    const vi = 1;
+    const [lang, setLang] = useState(en);
 
     const [isAdmin, toggleAdmin] = useState(false);
 
@@ -48,22 +56,22 @@ export default function HomeNavBar() {
                                 <li
                                     onClick={() => handleChangeNav(1)}
                                 >
-                                    <NavLink to="/">Trang chủ chu chảng</NavLink>
+                                    <NavLink to="/">{textContent.lang[lang]}</NavLink>
                                 </li>
                                 <li
                                     onClick={() => handleChangeNav(4)}
                                 >
-                                    <NavLink to="/shop">Mua hàng</NavLink>
+                                    <NavLink to="/shop">{textContent.help[lang]}</NavLink>
                                 </li>
                                 <li
                                     onClick={() => handleChangeNav(2)}
                                 >
-                                    <NavLink to="/search">Lịch sử mua hàng</NavLink>
+                                    <NavLink to="/search">{textContent.about[lang]}</NavLink>
                                 </li>
                                 <li
                                     onClick={() => handleChangeNav(3)}
                                 >
-                                    <NavLink to="/payment">Giỏ hàng</NavLink>
+                                    <NavLink to="/payment">{textContent.start[lang]}</NavLink>
                                 </li>
                                 {/* <NavLink to="/admin">
                   <li
