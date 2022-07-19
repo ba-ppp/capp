@@ -25,6 +25,17 @@ const initialState = {
         supportLangDes: ["Languages we support", "Các ngôn ngữ được hỗ trợ"],
         langViDes: ["VietNam", "Việt Nam"],
         langEnDes: ["English", "Tiếng Anh"],
+        guideTit: ["HOW IT WORKS?", "CÁCH HOẠT ĐỘNG?"],
+        guideDes: [
+            "Simple guideline, diversely platform to download",
+            "Hướng dẫn đơn giản, hỗ trợ nhiều nền tảng",
+        ],
+        lapTit: ["AVAILABLE ON WEBSITE", "NỀN TẢNG WEB"],
+        lapDes: [
+            "No installation, no setup environment.",
+            "Không cần cài đặt, thiết lập môi trường.",
+        ],
+        mobiTit: ["AVAILABLE ON SMARTPHONE", "NỀN TẢNG DI ĐỘNG"],
     },
 };
 
