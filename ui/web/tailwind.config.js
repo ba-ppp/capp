@@ -15,6 +15,7 @@ module.exports = {
                 main: {
                     200: '#DBDFFD',
                     400: '#9BA3EB',
+                    500: "#2955D7",
                     600: '#646FD4',
                     800: '#242F9B',
                 },
@@ -24,7 +25,15 @@ module.exports = {
                     600: '#BD4291',
                     800: '#FFC54D',
                 },
-            }
+            },
+            backgroundImage: {
+                'main-img': "url('asset/images/home-page-background.svg')",
+            },
+            boxShadow: {
+                'nav': '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                'ser': '4px 5px 29px rgba(0, 0, 0, 0.25)'
+              }
+            
         },
         plugins: [],
     },
