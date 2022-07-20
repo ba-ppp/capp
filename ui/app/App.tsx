@@ -8,15 +8,24 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './src/views/Home/Home';
 import Camera from './src/views/Camera/Camera';
 import {Image} from 'react-native';
+import StartScreen from './src/components/StartScreen';
 
 const Tab = createBottomTabNavigator();
 const App = () => {
+  const [displayStartScreen, setDisplayStartScreen] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setDisplayStartScreen(false);
+    }, 1500);
+  }, []);
+
+  if (displayStartScreen) return <StartScreen />;
   return (
     <NavigationContainer>
       <Tab.Navigator
