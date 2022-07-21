@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './src/views/Home/Home';
 import Camera from './src/views/Camera/Camera';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const App = () => {
@@ -22,18 +22,17 @@ const App = () => {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: () => {
-            let iconSize = 30;
             if (route.name === 'Home') {
               return (
                 <Image
-                  style={{ width: iconSize, height: iconSize }}
+                  style={styles.icon}
                   source={require('./assets/home_icon.png')}
                 />
               );
             } else if (route.name === 'Camera') {
               return (
                 <Image
-                  style={{ width: iconSize, height: iconSize }}
+                  style={styles.icon}
                   source={require('./assets/camera_icon.png')}
                 />
               );
@@ -48,5 +47,12 @@ const App = () => {
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30,
+  },
+});
 
 export default App;
