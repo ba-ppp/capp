@@ -15,7 +15,8 @@ const StartScreen = () => {
 const styles = StyleSheet.create({
   image: {
     margin: 25,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
+    height: 70,
   },
   container: {
     height: '100%',

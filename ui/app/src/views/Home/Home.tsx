@@ -7,13 +7,14 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import MyButton from '../../components/MyButton';
 import { color } from '../../constants/color';
 
 const Home = () => {
+  const windowHeight = Dimensions.get('window').height;
   const windowWidth = Dimensions.get('window').width;
   const [images, setImages] = useState<Array<any>>([]);
   const styles = StyleSheet.create({
@@ -26,7 +27,6 @@ const Home = () => {
     },
     imageItemContainer: {
       marginBottom: 20,
-      marginTop: 20,
     },
     image: {
       width: windowWidth,
@@ -35,6 +35,7 @@ const Home = () => {
     imageItemFooter: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
     },
     volumeIcon: {
       height: 24,
@@ -50,7 +51,24 @@ const Home = () => {
       backgroundColor: color.white,
     },
     headerLogo: {
-      resizeMode: 'cover',
+      resizeMode: 'contain',
+      height: 50,
+    },
+    uploadScreen: {
+      backgroundColor: color.antiFlashWhite,
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      top: 0,
+      zIndex: -1,
+      height: windowHeight,
+      width: windowWidth,
+    },
+    plus: {
+      fontSize: 60,
+    },
+    scrollView: {
+      marginBottom: 50,
     },
   });
 
@@ -67,66 +85,65 @@ const Home = () => {
     });
   };
 
+  const uploadScreen = (
+    <TouchableOpacity onPress={openLibrary} style={styles.uploadScreen}>
+      <Text style={styles.plus}>+</Text>
+      <Text>Upload image</Text>
+    </TouchableOpacity>
+  );
+
+  const imageList = (
+    <ScrollView style={styles.scrollView}>
+      {images?.length
+        ? images.map(imageObject => {
+            return (
+              <View key={imageObject.uri} style={styles.imageItemContainer}>
+                <Image
+                  // resizeMode="contain"
+                  source={{
+                    uri: 'data:image/png;base64,' + imageObject.base64,
+                  }}
+                  style={[
+                    styles.image,
+                    {
+                      height: Math.min(
+                        imageObject.height,
+                        (imageObject.height * windowWidth) /
+                          imageObject.width /
+                          2,
+                      ),
+                    },
+                  ]}
+                />
+                <View style={styles.imageItemFooter}>
+                  <Pressable
+                    onPress={() => {
+                      Alert.alert('Read aloud caption!');
+                    }}>
+                    <Image
+                      style={styles.volumeIcon}
+                      source={require('../../../assets/volume_icon.png')}
+                    />
+                  </Pressable>
+                  <Text style={styles.caption}>Caption</Text>
+                </View>
+              </View>
+            );
+          })
+        : null}
+    </ScrollView>
+  );
+
   return (
-    <ScrollView>
+    <View>
       <View style={styles.header}>
         <Image
           style={styles.headerLogo}
           source={require('../../../assets/Index.png')}
         />
       </View>
-      <Text style={styles.title}>Image Captioning Generator</Text>
-      <MyButton onPress={openLibrary} width={'100%'}>
-        <Text style={styles.btnText}>Select image from library</Text>
-      </MyButton>
-      <View>
-        {images?.length
-          ? images.map(imageObject => {
-              return (
-                <View key={imageObject.uri} style={styles.imageItemContainer}>
-                  <Image
-                    // resizeMode="contain"
-                    source={{
-                      uri: 'data:image/png;base64,' + imageObject.base64,
-                    }}
-                    style={[
-                      styles.image,
-                      {
-                        height: Math.min(
-                          imageObject.height,
-                          (imageObject.height * windowWidth) /
-                            imageObject.width,
-                        ),
-                      },
-                    ]}
-                  />
-                  <MyButton
-                    width={150}
-                    onPress={() => {
-                      Alert.alert('Download audio file!');
-                    }}>
-                    <Text style={{ color: color.white }}>
-                      Download audio file
-                    </Text>
-                  </MyButton>
-                  <View style={styles.imageItemFooter}>
-                    <Pressable
-                      onPress={() => {
-                        Alert.alert('Read aloud caption!');
-                      }}>
-                      <Image
-                        style={styles.volumeIcon}
-                        source={require('../../../assets/volume_icon.png')}
-                      />
-                    </Pressable>
-                    <Text style={styles.caption}>Caption</Text>
-                  </View>
-                </View>
-              );
-            })
-          : null}
-      </View>
-    </ScrollView>
+      {images?.length ? imageList : uploadScreen}
+    </View>
   );
 };
 
