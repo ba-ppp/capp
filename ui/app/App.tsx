@@ -15,8 +15,14 @@ import Home from './src/views/Home/Home';
 import Camera from './src/views/Camera/Camera';
 import { Image } from 'react-native';
 import StartScreen from './src/components/StartScreen';
+import LanguageModal from './src/components/LanguageModal';
 
 const Tab = createBottomTabNavigator();
+
+const EmptyScreenComponent = () => {
+  return null;
+};
+
 const App = () => {
   const [displayStartScreen, setDisplayStartScreen] = useState(true);
   useEffect(() => {
@@ -54,6 +60,13 @@ const App = () => {
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
         })}>
+        <Tab.Screen
+          name="Language"
+          component={EmptyScreenComponent}
+          options={{
+            tabBarButton: () => <LanguageModal />,
+          }}
+        />
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Camera" component={Camera} />
       </Tab.Navigator>
