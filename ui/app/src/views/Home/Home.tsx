@@ -43,6 +43,15 @@ const Home = () => {
     caption: {
       fontSize: 22,
     },
+    header: {
+      alignItems: 'center',
+      paddingBottom: 5,
+      elevation: 1,
+      backgroundColor: color.white,
+    },
+    headerLogo: {
+      resizeMode: 'cover',
+    },
   });
 
   const openLibrary = () => {
@@ -60,6 +69,12 @@ const Home = () => {
 
   return (
     <ScrollView>
+      <View style={styles.header}>
+        <Image
+          style={styles.headerLogo}
+          source={require('../../../assets/Index.png')}
+        />
+      </View>
       <Text style={styles.title}>Image Captioning Generator</Text>
       <MyButton onPress={openLibrary} width={'100%'}>
         <Text style={styles.btnText}>Select image from library</Text>
