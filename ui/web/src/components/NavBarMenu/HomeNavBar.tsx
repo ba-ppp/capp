@@ -42,7 +42,7 @@ export default function HomeNavBar() {
     return (
         <>
             {!isAdmin ? (
-                <div className="bg-white h-36 shadow-nav fixed left-0 right-0 top-0">
+                <div className="bg-white h-[136px] shadow-nav fixed left-0 right-0 top-0">
                     <div className="flex items-center content-center justify-around h-full">
                         <NavLink to="/">
                             <div className="flex text-5xl items-center">

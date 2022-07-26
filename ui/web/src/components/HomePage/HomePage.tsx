@@ -1,11 +1,15 @@
 import { RootState } from "app/store/store";
 import { ReactComponent as ServiceIconDown } from "asset/icons/down-icon.svg";
 import { ReactComponent as ServiceIconCap } from "asset/icons/caption-icon.svg";
+import { ReactComponent as Logo } from "asset/icons/logo.svg";
 import { ReactComponent as SupportViFlag } from "asset/images/vi-flag.svg";
 import { ReactComponent as SupportEnFlag } from "asset/images/en-flag.svg";
 import { ReactComponent as SupportUsFlag } from "asset/images/us-flag.svg";
 import { ReactComponent as Laptop } from "asset/images/laptop.svg";
 import LapKeyboard from "asset/images/lap-keyboard.png";
+import Mobile from "asset/images/mobile.png";
+import AppStore from "asset/icons/appstore-icon.png";
+import CHPlay from "asset/icons/chplay-icon.png";
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -23,7 +27,7 @@ export default function HomePage() {
     const [lang, setLang] = useState(isEnglish ? en : vi);
 
     return (
-        <div className="bg-main-img bg-cover text-bg-800  py-16 px-4 mt-64 flex flex-col items-center">
+        <div className="bg-main-img bg-contain bg-no-repeat text-bg-800 mt-64 flex flex-col items-center">
             <div className="text-6xl">
                 <span className="font-normal">
                     {textContent.intro[lang]}&nbsp;
@@ -147,7 +151,7 @@ export default function HomePage() {
                     <Laptop />
                 </span>
             </div>
-            <div className="flex justify-between ml-32 rounded-l-full mt-44 w-full bg-main-600">
+            <div className="flex justify-between ml-32 rounded-l-full mt-44 bg-main-600">
                 <div className="flex flex-col justify-center ml-36 text-bg-200">
                     <span className="font-extrabold text-[64px] leading-[96px]">
                         {textContent.lapTit[lang]}
@@ -156,7 +160,52 @@ export default function HomePage() {
                         {textContent.lapDes[lang]}
                     </span>
                 </div>
-                <img src={LapKeyboard} alt="loading..." className="w-3/5 " />
+                <img src={LapKeyboard} alt="loading..." className="w-3/5" />
+            </div>
+            <div className="mt-32 flex items-center justify-around w-full">
+                <img src={Mobile} alt="loading..." className="w-[643px]" />
+                <div className="w-[550px] flex flex-col items-end">
+                    <span className="text-main-800 text-right font-extrabold text-[64px] leading-[96px]">
+                        AVAILABLE ON SMARTPHONE
+                    </span>
+                    <div className="flex mt-10">
+                        <span>
+                            <img
+                                src={AppStore}
+                                alt="loading..."
+                                className="w-[238px]"
+                            />
+                        </span>
+                        <span>
+                            <img
+                                src={CHPlay}
+                                alt="loading..."
+                                className="w-[238px] ml-7"
+                            />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div className="h-32  w-full mb-5 flex items-center justify-start">
+                <NavLink to="/" className="mx-16">
+                    <div className="flex  text-5xl items-center">
+                        <span className="text-main-800 font-black">Image</span>
+                        <span className="text-bg-600 font-black">Caption</span>
+                    </div>
+                </NavLink>
+                <div className="text-2xl font-semibold">
+                    <NavLink to="/" className="mr-5">
+                        Terms of services
+                    </NavLink>
+                    <span className="border-x border-x-bg-800">
+                        <NavLink to="/" className="mx-5">
+                            Privacy
+                        </NavLink>
+                    </span>
+                    <NavLink to="/" className="ml-5">
+                        About us
+                    </NavLink>
+                </div>
             </div>
         </div>
     );
