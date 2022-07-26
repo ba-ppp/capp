@@ -1,7 +1,6 @@
 import { RootState } from "app/store/store";
 import { ReactComponent as ServiceIconDown } from "asset/icons/down-icon.svg";
 import { ReactComponent as ServiceIconCap } from "asset/icons/caption-icon.svg";
-import { ReactComponent as Logo } from "asset/icons/logo.svg";
 import { ReactComponent as SupportViFlag } from "asset/images/vi-flag.svg";
 import { ReactComponent as SupportEnFlag } from "asset/images/en-flag.svg";
 import { ReactComponent as SupportUsFlag } from "asset/images/us-flag.svg";
@@ -10,7 +9,6 @@ import LapKeyboard from "asset/images/lap-keyboard.png";
 import Mobile from "asset/images/mobile.png";
 import AppStore from "asset/icons/appstore-icon.png";
 import CHPlay from "asset/icons/chplay-icon.png";
-
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
