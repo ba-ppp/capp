@@ -10,14 +10,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './src/views/Home/Home';
-import Camera from './src/views/Camera/Camera';
-import { Image } from 'react-native';
+import HomeNavigator from './src/views/Home/HomeNavigator';
+import MyCamera from './src/views/Camera/Camera';
 import StartScreen from './src/components/StartScreen';
-import LanguageModal from './src/components/LanguageModal';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const EmptyScreenComponent = () => {
   return null;
@@ -36,41 +34,13 @@ const App = () => {
   }
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={({ route }) => ({
-          tabBarIcon: () => {
-            let iconSize = 30;
-            if (route.name === 'Home') {
-              return (
-                <Image
-                  style={{ width: iconSize, height: iconSize }}
-                  source={require('./assets/home_icon.png')}
-                />
-              );
-            } else if (route.name === 'Camera') {
-              return (
-                <Image
-                  style={{ width: iconSize, height: iconSize }}
-                  source={require('./assets/camera_icon.png')}
-                />
-              );
-            }
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
+      <Stack.Navigator
+        screenOptions={{
           headerShown: false,
-        })}>
-        <Tab.Screen
-          name="Language"
-          component={EmptyScreenComponent}
-          options={{
-            tabBarButton: () => <LanguageModal />,
-          }}
-        />
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Camera" component={Camera} />
-      </Tab.Navigator>
+        }}>
+        <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
+        <Stack.Screen name="Camera" component={MyCamera} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

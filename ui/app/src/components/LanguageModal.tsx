@@ -30,7 +30,7 @@ const LanguageModal = () => {
       borderRadius: 1000,
     },
     tabButton: {
-      backgroundColor: color.violetBlue,
+      // backgroundColor: color.violetBlue,
       justifyContent: 'center',
     },
   });
