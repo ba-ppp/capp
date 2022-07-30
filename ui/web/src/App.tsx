@@ -4,7 +4,6 @@ import PageNotFound from "components/PageNotFound";
 import { useDispatch, useSelector } from "react-redux";
 import NavBarMenu from "components/NavBarMenu/NavBarMenu";
 import { RootState } from "app/store/store";
-import { toggleMenuSelect } from "app/slices/toggleSlice";
 import HomeNavBar from "components/NavBarMenu/HomeNavBar";
 
 function App() {
