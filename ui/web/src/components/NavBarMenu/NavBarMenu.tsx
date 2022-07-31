@@ -1,4 +1,4 @@
-export default function NavBarMenu() {
+export const NavBarMenu = () => {
     return (
         <div>NavBarMenu</div>
     )
