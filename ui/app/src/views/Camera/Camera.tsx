@@ -57,6 +57,13 @@ const MyCamera = ({ navigation }) => {
     return <Text>Loading</Text>;
   }
 
+  const takePhoto = async () => {
+    const photo = await camera.current.takePhoto({
+      enableAutoStabilization: true,
+    });
+    console.log(photo);
+  };
+
   return (
     <View style={styles.container}>
       <Camera
@@ -66,7 +73,7 @@ const MyCamera = ({ navigation }) => {
         photo={true}
         ref={camera}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={takePhoto}>
         <Image source={cameraIcon} style={styles.icon} />
       </TouchableOpacity>
     </View>

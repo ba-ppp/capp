@@ -20,9 +20,14 @@ const CameraButton = ({ navigation }) => {
       justifyContent: 'center',
     },
   });
+
+  const openCamera = () => {
+    navigation.push('Camera');
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.push('Camera')}>
+      <TouchableOpacity onPress={openCamera}>
         <Image
           source={require('../../../assets/camera_icon.png')}
           style={styles.icon}

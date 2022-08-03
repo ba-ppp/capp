@@ -93,6 +93,10 @@ const HomeScreen = () => {
     </TouchableOpacity>
   );
 
+  const readCaption = () => {
+    Alert.alert('Read aloud caption!');
+  };
+
   const imageList = (
     <ScrollView style={styles.scrollView}>
       {images?.length
@@ -117,10 +121,7 @@ const HomeScreen = () => {
                   ]}
                 />
                 <View style={styles.imageItemFooter}>
-                  <Pressable
-                    onPress={() => {
-                      Alert.alert('Read aloud caption!');
-                    }}>
+                  <Pressable onPress={readCaption}>
                     <Image
                       style={styles.volumeIcon}
                       source={require('../../../assets/volume_icon.png')}
