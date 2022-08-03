@@ -157,7 +157,7 @@ const HomeScreen = () => {
                   </Pressable>
                   <Text numberOfLines={1} style={styles.caption}>Hello! This is a caption!</Text>
 
-                  <Pressable
+                  {/* <Pressable
                     onPress={() => {
                       Alert.alert('Hello! This is a caption!');
                 
@@ -166,13 +166,13 @@ const HomeScreen = () => {
                       style={styles.volumeIcon}
                       source={require('../../../assets/small_down.png')}
                     />
-                  </Pressable>
+                  </Pressable> */}
 
                   {/* <TouchableOpacity
                     style={styles.dropDown}
                     activeOpacity={0.8}>
                     onPress={() => {
-                      onOpen('This is a caption!')
+                      // onOpen('This is a caption!')
                     }}
                     <Image
                       style={styles.volumeIcon}
