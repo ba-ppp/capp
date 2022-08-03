@@ -10,9 +10,9 @@ import {
   Image,
   Alert,
 } from 'react-native';
-
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
+import { Icon, Menu, MenuGroup, MenuItem } from '@ui-kitten/components';
 
 const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -42,27 +42,29 @@ const HomeScreen = () => {
       justifyContent: 'flex-end',
       width: windowWidth/2.3,
       backgroundColor: "white",
-      borderRadius: 20,
+      borderRadius: 10,
     },
     image: {
       width: windowWidth/2.5,
       resizeMode: 'contain',
-      flexGrow: 1
+      flexGrow: 1,
     },
     imageItemFooter: {
-      flex: 0,
-      width: windowWidth/2.5,
+      width: windowWidth/2.3,
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'center',
-      
+      // justifyContent: 'flex-start',
     },
     volumeIcon: {
       height: 24,
       width: 24,
+      
     },
     caption: {
-      fontSize: 22,
+      fontSize: 18,
+      width: windowWidth/5,
+      textAlign: 'center',
+      flexGrow: 1,
     },
     header: {
       justifyContent: 'center',
@@ -148,7 +150,12 @@ const HomeScreen = () => {
                       source={require('../../../assets/volume_icon.png')}
                     />
                   </Pressable>
-                  <Text style={styles.caption}>Caption</Text>
+                  <Text numberOfLines={1} style={styles.caption}>Hello! This is a Caption!</Text>
+                  {/* <Image
+                      style={styles.volumeIcon}
+                      source={require('../../../assets/small_down.png')}
+                    /> */}
+                  
                 </View>
               </View>
             );
