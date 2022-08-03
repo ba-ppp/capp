@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
-import { Icon, Menu, MenuGroup, MenuItem } from '@ui-kitten/components';
+
 
 const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
