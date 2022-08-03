@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
-
+import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 
 const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -26,12 +26,12 @@ const HomeScreen = () => {
     btnText: {
       color: color.white,
     },
-    listItemContainer:{
+    listItemContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginBottom: 10,
       flexWrap: "wrap",
-      
+
     },
     imageItemContainer: {
       marginTop: 20,
@@ -40,17 +40,17 @@ const HomeScreen = () => {
       marginRight: 10,
       alignItems: 'center',
       justifyContent: 'flex-end',
-      width: windowWidth/2.3,
+      width: windowWidth / 2.3,
       backgroundColor: "white",
       borderRadius: 10,
     },
     image: {
-      width: windowWidth/2.5,
+      width: windowWidth / 2.5,
       resizeMode: 'contain',
       flexGrow: 1,
     },
     imageItemFooter: {
-      width: windowWidth/2.3,
+      width: windowWidth / 2.3,
       flexDirection: 'row',
       alignItems: 'center',
       // justifyContent: 'flex-start',
@@ -58,11 +58,11 @@ const HomeScreen = () => {
     volumeIcon: {
       height: 24,
       width: 24,
-      
+
     },
     caption: {
       fontSize: 18,
-      width: windowWidth/5,
+      width: windowWidth / 5,
       textAlign: 'center',
       flexGrow: 1,
     },
@@ -94,6 +94,11 @@ const HomeScreen = () => {
     scrollView: {
       marginBottom: 100,
     },
+    dropDown: {
+      backgroundColor: 'rgba(0,0,0,0,0.2)',
+      padding: 8,
+      borderRadius: 6,
+    },
   });
 
   const openLibrary = () => {
@@ -118,11 +123,11 @@ const HomeScreen = () => {
 
   const imageList = (
     <ScrollView style={styles.scrollView}>
-      <View style = {styles.listItemContainer}>
-      {images?.length
-        ? images.map(imageObject => {
+      <View style={styles.listItemContainer}>
+        {images?.length
+          ? images.map(imageObject => {
             return (
-              <View key={imageObject.uri} style={styles.imageItemContainer }>
+              <View key={imageObject.uri} style={styles.imageItemContainer}>
                 <Image
                   resizeMode="contain"
                   source={{
@@ -134,8 +139,8 @@ const HomeScreen = () => {
                       height: Math.min(
                         imageObject.height,
                         (imageObject.height * windowWidth) /
-                          imageObject.width /
-                          2,
+                        imageObject.width /
+                        2,
                       ),
                     },
                   ]}
@@ -150,19 +155,39 @@ const HomeScreen = () => {
                       source={require('../../../assets/volume_icon.png')}
                     />
                   </Pressable>
-                  <Text numberOfLines={1} style={styles.caption}>Hello! This is a Caption!</Text>
-                  {/* <Image
+                  <Text numberOfLines={1} style={styles.caption}>Hello! This is a caption!</Text>
+
+                  <Pressable
+                    onPress={() => {
+                      Alert.alert('Hello! This is a caption!');
+                
+                    }}>
+                    <Image
                       style={styles.volumeIcon}
                       source={require('../../../assets/small_down.png')}
-                    /> */}
-                  
+                    />
+                  </Pressable>
+
+                  {/* <TouchableOpacity
+                    style={styles.dropDown}
+                    activeOpacity={0.8}>
+                    onPress={() => {
+                      onOpen('This is a caption!')
+                    }}
+                    <Image
+                      style={styles.volumeIcon}
+                      source={require('../../../assets/small_down.png')}
+                    />
+                  </TouchableOpacity> */}
+
+
                 </View>
               </View>
             );
           })
-        : null}
-        </View> 
-   </ScrollView>
+          : null}
+      </View>
+    </ScrollView>
   );
 
   return (
