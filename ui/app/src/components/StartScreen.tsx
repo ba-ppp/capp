@@ -2,13 +2,10 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 const StartScreen = () => {
+  const logo = require('../../assets/Index.png');
   return (
     <View style={styles.container}>
-      <Image
-        resizeMode="cover"
-        style={styles.image}
-        source={require('../../assets/Index.png')}
-      />
+      <Image resizeMode="cover" style={styles.image} source={logo} />
     </View>
   );
 };
