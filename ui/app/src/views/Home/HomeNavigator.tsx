@@ -35,7 +35,10 @@ const CameraButton = ({ navigation }) => {
 const HomeNavigator = ({ navigation }) => {
   const styles = StyleSheet.create({
     tabBar: {
-      paddingHorizontal: 40,
+      height: 100,
+      paddingHorizontal: 70,
+      borderTopLeftRadius: 50,
+      borderTopRightRadius: 50,
     },
   });
   const homeIcon = require('../../../assets/home_icon.png');
