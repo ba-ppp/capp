@@ -1,11 +1,12 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useRef } from 'react';
+import { useEffect } from 'react';
 import { Image, Linking, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { color } from '../../constants/color';
 
-const MyCamera = () => {
+const MyCamera = ({ navigation }) => {
   const styles = StyleSheet.create({
     camera: {
       // maxHeight: 500,
@@ -33,30 +34,20 @@ const MyCamera = () => {
     },
   });
 
-  // const [showCamera, setShowCamera] = useState(false);
   const cameraIcon = require('../../../assets/camera_icon.png');
 
-  const mytest = async () => {
-    const cameraPermission = await Camera.getCameraPermissionStatus();
-    if (cameraPermission === 'denied') {
-      await Linking.openSettings();
-    }
-  };
-  mytest();
+  //check and request camera permission
+  useEffect(() => {
+    (async () => {
+      const cameraPermission = await Camera.getCameraPermissionStatus();
+      if (cameraPermission !== 'authorized') {
+        Camera.requestCameraPermission().then(
+          res => res === 'denied' && navigation.pop(),
+        );
+      }
+    })();
+  }, []);
 
-  async function getCameraPermission() {
-    const cameraPermission = await Camera.getCameraPermissionStatus();
-    return cameraPermission;
-  }
-
-  async function requestCameraPermission() {
-    try {
-      const newCameraPermission = await Camera.requestCameraPermission();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  // requestCameraPermission();
   const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
   const device = devices.back;
