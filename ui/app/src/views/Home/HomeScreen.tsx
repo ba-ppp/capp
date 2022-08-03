@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
-import { Picker, onOpen } from 'react-native-actions-sheet-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -94,11 +94,7 @@ const HomeScreen = () => {
     scrollView: {
       marginBottom: 100,
     },
-    dropDown: {
-      backgroundColor: 'rgba(0,0,0,0,0.2)',
-      padding: 8,
-      borderRadius: 6,
-    },
+
   });
 
   const openLibrary = () => {
@@ -120,6 +116,13 @@ const HomeScreen = () => {
       <Text>Upload image</Text>
     </TouchableOpacity>
   );
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' }
+  ]);
 
   const imageList = (
     <ScrollView style={styles.scrollView}>
@@ -157,7 +160,7 @@ const HomeScreen = () => {
                   </Pressable>
                   <Text numberOfLines={1} style={styles.caption}>Hello! This is a caption!</Text>
 
-                  {/* <Pressable
+                  <Pressable
                     onPress={() => {
                       Alert.alert('Hello! This is a caption!');
                 
@@ -166,19 +169,9 @@ const HomeScreen = () => {
                       style={styles.volumeIcon}
                       source={require('../../../assets/small_down.png')}
                     />
-                  </Pressable> */}
+                  </Pressable>
 
-                  {/* <TouchableOpacity
-                    style={styles.dropDown}
-                    activeOpacity={0.8}>
-                    onPress={() => {
-                      // onOpen('This is a caption!')
-                    }}
-                    <Image
-                      style={styles.volumeIcon}
-                      source={require('../../../assets/small_down.png')}
-                    />
-                  </TouchableOpacity> */}
+                  
 
 
                 </View>
