@@ -1,6 +1,6 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useRef } from 'react';
-import { Button, Image, Linking, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { color } from '../../constants/color';
@@ -34,6 +34,7 @@ const MyCamera = () => {
   });
 
   // const [showCamera, setShowCamera] = useState(false);
+  const cameraIcon = require('../../../assets/camera_icon.png');
 
   const mytest = async () => {
     const cameraPermission = await Camera.getCameraPermissionStatus();
@@ -75,10 +76,7 @@ const MyCamera = () => {
         ref={camera}
       />
       <TouchableOpacity style={styles.button}>
-        <Image
-          source={require('../../../assets/camera_icon.png')}
-          style={styles.icon}
-        />
+        <Image source={cameraIcon} style={styles.icon} />
       </TouchableOpacity>
     </View>
   );

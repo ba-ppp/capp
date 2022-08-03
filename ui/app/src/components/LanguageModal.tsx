@@ -7,6 +7,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const LanguageModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [language, setLanguage] = useState('vi');
+  const languageIcon =
+    language === 'vi'
+      ? require('../../assets/vietnam-icon.png')
+      : require('../../assets/uk-icon.png');
   const styles = StyleSheet.create({
     icon: {
       height: 30,
@@ -63,15 +67,7 @@ const LanguageModal = () => {
           onPress={() => {
             setModalVisible(true);
           }}>
-          <Image
-            source={
-              language === 'vi'
-                ? require('../../assets/vietnam-icon.png')
-                : require('../../assets/uk-icon.png')
-            }
-            style={styles.icon}
-          />
-          
+          <Image source={languageIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
       <Modal
@@ -79,10 +75,7 @@ const LanguageModal = () => {
         isVisible={modalVisible}
         onBackdropPress={() => setModalVisible(false)}>
         <View style={styles.modalContent}>
-          <TouchableOpacity
-            onPress={() => {
-              handleChooseLanguage('vi');
-            }}>
+          <TouchableOpacity onPress={() => handleChooseLanguage('vi')}>
             <Image
               source={require('../../assets/vietnam.png')}
               style={styles.logo}

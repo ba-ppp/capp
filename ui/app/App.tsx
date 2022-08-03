@@ -17,10 +17,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-const EmptyScreenComponent = () => {
-  return null;
-};
-
 const App = () => {
   const [displayStartScreen, setDisplayStartScreen] = useState(true);
   useEffect(() => {
@@ -29,19 +25,19 @@ const App = () => {
     }, 1500);
   }, []);
 
-  if (displayStartScreen) {
-    return <StartScreen />;
-  }
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
-        <Stack.Screen name="Camera" component={MyCamera} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      {displayStartScreen ? <StartScreen /> : null}
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
+          <Stack.Screen name="Camera" component={MyCamera} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 
