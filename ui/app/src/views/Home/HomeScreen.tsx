@@ -47,12 +47,15 @@ const HomeScreen = () => {
     image: {
       width: windowWidth/2.5,
       resizeMode: 'contain',
+      flexGrow: 1
     },
     imageItemFooter: {
+      flex: 0,
       width: windowWidth/2.5,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
+      
     },
     volumeIcon: {
       height: 24,
@@ -117,9 +120,9 @@ const HomeScreen = () => {
       {images?.length
         ? images.map(imageObject => {
             return (
-              <View key={imageObject.uri} style={styles.imageItemContainer}>
+              <View key={imageObject.uri} style={styles.imageItemContainer }>
                 <Image
-                  // resizeMode="contain"
+                  resizeMode="contain"
                   source={{
                     uri: 'data:image/png;base64,' + imageObject.base64,
                   }}
