@@ -10,7 +10,6 @@ import {
   Image,
   Alert,
 } from 'react-native';
-
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
 
@@ -26,14 +25,30 @@ const HomeScreen = () => {
     btnText: {
       color: color.white,
     },
+    listItemContainer:{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+      flexWrap: "wrap",
+      
+    },
     imageItemContainer: {
+      marginTop: 20,
       marginBottom: 20,
+      marginLeft: 10,
+      marginRight: 10,
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      width: windowWidth/2.3,
+      backgroundColor: "white",
+      borderRadius: 20,
     },
     image: {
-      width: windowWidth,
+      width: windowWidth/2.5,
       resizeMode: 'contain',
     },
     imageItemFooter: {
+      width: windowWidth/2.5,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
@@ -46,6 +61,8 @@ const HomeScreen = () => {
       fontSize: 22,
     },
     header: {
+      justifyContent: 'center',
+      height: 100,
       alignItems: 'center',
       paddingBottom: 5,
       elevation: 1,
@@ -69,7 +86,7 @@ const HomeScreen = () => {
       fontSize: 60,
     },
     scrollView: {
-      marginBottom: 50,
+      marginBottom: 100,
     },
   });
 
@@ -95,6 +112,7 @@ const HomeScreen = () => {
 
   const imageList = (
     <ScrollView style={styles.scrollView}>
+      <View style = {styles.listItemContainer}>
       {images?.length
         ? images.map(imageObject => {
             return (
@@ -132,7 +150,8 @@ const HomeScreen = () => {
             );
           })
         : null}
-    </ScrollView>
+        </View> 
+   </ScrollView>
   );
 
   return (
