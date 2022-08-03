@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import {
-  Alert,
   Dimensions,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  Image,
+  Alert,
 } from 'react-native';
+
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
 
-const Home = () => {
+const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
   const windowWidth = Dimensions.get('window').width;
   const [images, setImages] = useState<Array<any>>([]);
@@ -147,4 +148,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;
