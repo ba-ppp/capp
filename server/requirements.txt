@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-multipart
+numpy
+pillow
+matplotlib
+tensorflow
+keras
+fastapi
+python-multipart
+paho-mqtt
