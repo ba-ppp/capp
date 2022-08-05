@@ -6,21 +6,21 @@ import { HomePage } from "components/HomePage/HomePage";
 import { NavBarMenu } from "components/NavBarMenu/NavBarMenu";
 import { HomeNavBar } from "components/NavBarMenu/HomeNavBar";
 import { PageNotFound } from "components/PageNotFound";
-import UploadPage from "components/UploadPage/UploadPage";
+import { UploadPage } from "components/UploadPage/UploadPage";
 
 function App() {
-    const { hasMenuSelect } = useSelector((state: RootState) => state.toggle);
-    return (
-        <div>
-            {!hasMenuSelect ? <NavBarMenu /> : <HomeNavBar />}
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/upload" element={<UploadPage />} />
+  const { hasMenuSelect } = useSelector((state: RootState) => state.toggle);
+  return (
+    <div>
+      {!hasMenuSelect ? <NavBarMenu /> : <HomeNavBar />}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/upload" element={<UploadPage />} />
 
-                <Route path="*" element={<PageNotFound />} />
-            </Routes>
-        </div>
-    );
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
