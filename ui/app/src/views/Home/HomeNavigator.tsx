@@ -20,14 +20,9 @@ const CameraButton = ({ navigation }) => {
       justifyContent: 'center',
     },
   });
-
-  const openCamera = () => {
-    navigation.push('Camera');
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={openCamera}>
+      <TouchableOpacity onPress={() => navigation.push('Camera')}>
         <Image
           source={require('../../../assets/camera_icon.png')}
           style={styles.icon}
@@ -40,7 +35,10 @@ const CameraButton = ({ navigation }) => {
 const HomeNavigator = ({ navigation }) => {
   const styles = StyleSheet.create({
     tabBar: {
-      paddingHorizontal: 40,
+      height: 100,
+      paddingHorizontal: 70,
+      borderTopLeftRadius: 50,
+      borderTopRightRadius: 50,
     },
   });
   const homeIcon = require('../../../assets/home_icon.png');
