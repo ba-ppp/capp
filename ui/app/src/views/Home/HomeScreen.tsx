@@ -102,17 +102,17 @@ const HomeScreen = () => {
       justifyContent: 'center',
     },
     dropDownText: {
-      fontSize: 16,
+      fontSize: 18,
       justifyContent: 'center',
       alignItems: 'center',
     },
     dropDownBox: {
       width: windowWidth / 2.3 - 46,
-      fontSize: 16,
+      fontSize: 18,
       justifyContent: 'center',
     },
     dropDownBoxText: {
-      fontSize: 16,
+      fontSize: 18,
     },
     dropDownIcon: {
       width: 36,
