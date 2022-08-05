@@ -9,10 +9,13 @@ import {
   View,
   Image,
   Alert,
+  Button,
 } from 'react-native';
+
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { Dropdown } from 'react-native-element-dropdown';
+import { SelectCountry } from 'react-native-element-dropdown';
 
 const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -45,7 +48,7 @@ const HomeScreen = () => {
       borderRadius: 10,
     },
     image: {
-      width: windowWidth / 2.5,
+      width: windowWidth / 2.3,
       resizeMode: 'contain',
       flexGrow: 1,
     },
@@ -53,16 +56,15 @@ const HomeScreen = () => {
       width: windowWidth / 2.3,
       flexDirection: 'row',
       alignItems: 'center',
-      // justifyContent: 'flex-start',
+      justifyContent: 'flex-start',
     },
-    volumeIcon: {
-      height: 24,
-      width: 24,
-
+    icon: {
+      height: 22,
+      width: 22,
     },
     caption: {
-      fontSize: 18,
-      width: windowWidth / 5,
+      fontSize: 16,
+      width: windowWidth / 2.3,
       textAlign: 'center',
       flexGrow: 1,
     },
@@ -94,7 +96,33 @@ const HomeScreen = () => {
     scrollView: {
       marginBottom: 100,
     },
-
+    dropDown: {
+      width: windowWidth / 2.3 - 46,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+    },
+    dropDownText: {
+      fontSize: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    dropDownBox: {
+      width: windowWidth / 2.3 - 46,
+      fontSize: 16,
+      justifyContent: 'center',
+    },
+    dropDownBoxText: {
+      fontSize: 16,
+    },
+    dropDownIcon: {
+      width: 36,
+      marginRight: 10,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+    },
+    dropDownBoxIcon: {
+      resizeMode: 'contain',
+    },
   });
 
   const openLibrary = () => {
@@ -117,12 +145,9 @@ const HomeScreen = () => {
     </TouchableOpacity>
   );
 
-  const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' }
-  ]);
+  const [isFocus, setIsFocus] = useState(false);
+  const [country, setCountry] = useState('1');
 
   const imageList = (
     <ScrollView style={styles.scrollView}>
@@ -149,7 +174,7 @@ const HomeScreen = () => {
                   ]}
                 />
                 <View style={styles.imageItemFooter}>
-                  <Pressable
+                  {/* <Pressable
                     onPress={() => {
                       Alert.alert('Read aloud caption!');
                     }}>
@@ -157,22 +182,61 @@ const HomeScreen = () => {
                       style={styles.volumeIcon}
                       source={require('../../../assets/volume_icon.png')}
                     />
-                  </Pressable>
-                  <Text numberOfLines={1} style={styles.caption}>Hello! This is a caption!</Text>
+                  </Pressable> */}
 
-                  <Pressable
-                    onPress={() => {
-                      Alert.alert('Hello! This is a caption!');
-                
-                    }}>
-                    <Image
-                      style={styles.volumeIcon}
-                      source={require('../../../assets/small_down.png')}
+                  <SelectCountry
+                    style={styles.dropDownIcon}
+                    imageStyle={styles.icon}
+                    iconStyle={styles.icon}
+                    maxHeight={200}
+                    valueField="value"
+                    labelField="lable"
+                    imageField="image"
+                    placeholder=""
+                    onChange={e => {
+                      setCountry(e.value);
+                    }}
+                    
+                    renderRightIcon={() => (
+                      <Image
+                      style={styles.icon}
+                      source={require('../../../assets/menu.png')}
                     />
-                  </Pressable>
+                    )}
+                    data={[
+                      {
+                        value: '1',
+                        lable: '',
+                        image: require('../../../assets/volume_icon.png')
+                      },
+                      {
+                        value: '2',
+                        lable: '',
+                        image: require('../../../assets/download.png')
+                      },
+                    ]}
+                  />
 
-                  
-
+                  <Dropdown
+                    style={styles.dropDown}
+                    placeholder='Hello! This is a caption a caption a caption a caption a caption!'
+                    placeholderStyle={styles.dropDownText}
+                    containerStyle={styles.dropDownBox}
+                    selectedTextProps={{
+                      numberOfLines: 1
+                    }}
+                    labelField="label"
+                    valueField="value"
+                    value={value}
+                    onChange={item => {
+                      setValue(item.value);
+                      setIsFocus(false);
+                    }}
+                    selectedTextStyle={styles.dropDownBoxText}
+                    data={[
+                      { label: 'Hello! This is a caption a caption a caption a caption a caption!', value: '1' }
+                    ]}
+                  />
 
                 </View>
               </View>
@@ -180,7 +244,7 @@ const HomeScreen = () => {
           })
           : null}
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 
   return (
@@ -197,3 +261,7 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+function componentDidMount() {
+  throw new Error('Function not implemented.');
+}
+
