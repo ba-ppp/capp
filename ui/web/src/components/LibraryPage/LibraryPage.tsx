@@ -5,7 +5,7 @@ export default function LibraryPage() {
     const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     return (
         <div>
-            <div className="flex mt-64">
+            <div className="flex flex-wrap mt-64">
                 {array.map(() => {
                     return <ImageBox />;
                 })}
