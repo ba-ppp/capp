@@ -5,12 +5,13 @@ from fastapi import File, Form, UploadFile, FastAPI, BackgroundTasks
 from pydantic import BaseModel
 import uuid
 from fastapi.middleware.cors import CORSMiddleware
-from system.files_upload import *
+from system.process_files import *
 from system.socket import *
 from system.generate_captions import *
 from config.config import path_config
 from minio import Minio
 from minio.error import S3Error
+import os
 
 
 app = FastAPI()
@@ -37,47 +38,28 @@ class UploadItem(BaseModel):
 
 # upload images
 @app.post("/upload")
-# async def uploads(files: UploadItem, background_tasks: BackgroundTasks):
-#     print(files)
-#     # background_tasks.add_task(upload_files_sys, files)
-#     return {
-#         'msg': 'Done!'
-# }
-async def uploads(file: UploadFile = Form(), name: str = Form()):
-    print("run")
+async def uploads(id: str, file: UploadFile = Form()):
+    # Initialize minio client
+    print(id)
     client = Minio(
-        endpoint="play.min.io",
-        access_key="capp_cloud",
-        secret_key="Ii4*4LCr6ZFxntSsaXn2ki$prST9FW!idWq&pBZe",
+        endpoint=s3_config.get("endpoint"),
+        access_key=s3_config.get("access_key"),
+        secret_key=s3_config.get("secret_key"),
         secure=False,
     )
-    found = client.bucket_exists("images")
-    print(found)
-    if not found:
-        client.make_bucket("images")
-        print("Created")
-    else:
-        print("Bucket exists")
-    
-    result = client.put_object("images", file.filename, file.file, -1, part_size=10*1024*1024)
-    print(
-        "created {0} object; etag: {1}, version-id: {2}".format(
-            result.object_name,
-            result.etag,
-            result.version_id,
-        ),
-    )
-    url = client.presigned_get_object("images", file.filename)
-    response = client.get_object("images", file.filename)
-    print(response)
-    file_location = f"{path_config['static_path']}{file.filename}"
-    # write bytes of images to files
-    with open(file_location, "wb+") as file_object:
-        file_object.write(response.data)
+
+    # Upload file and create bucket
+    upload_file_to_s3(client, file)
+
+    # Write file to tmp folder
+    get_save_file_local(client, file.filename, id)
+    # url = client.presigned_get_object("images", file.filename)
+    # print(response)
+    # # write bytes of images to files
     # captions = generate_caption(url)
 
     # print(file.content_type)
-    return file
+    return {"message": "success"}
     # background_tasks.add_task(upload_files_sys, files)
 
 
