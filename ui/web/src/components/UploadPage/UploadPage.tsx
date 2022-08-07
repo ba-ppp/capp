@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
 import React, { useEffect } from "react";
-import { Dashboard, useUppy } from "@uppy/react";
+import { Dashboard, ProgressBar, useUppy } from "@uppy/react";
 import Uppy, { UppyFile, UppyOptions } from "@uppy/core";
 import UppyAwsS3 from '@uppy/aws-s3';
 import XHRUpload from "@uppy/xhr-upload";
@@ -31,7 +31,7 @@ export const UploadPage = () => {
 
   const uppyInstance = useUppy(() => {
     return new Uppy({ ...uppyOptions })
-    .use(XHRUpload, { endpoint: `http://localhost:8000/upload`, id: 'uppyUpload' })
+    .use(XHRUpload, { endpoint: `http://localhost:8000/upload?user_id=a`, id: 'uppyUpload' })
   });
 
   return (
@@ -46,6 +46,12 @@ export const UploadPage = () => {
         proudlyDisplayPoweredByUppy={false}
         // inline={true}
       />
+       <ProgressBar
+      // assuming `props.uppy` contains an Uppy instance:
+      uppy={uppyInstance}
+      fixed
+      hideAfterFinish
+    />
     </div>
   );
 };

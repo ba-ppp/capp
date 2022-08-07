@@ -38,9 +38,8 @@ class UploadItem(BaseModel):
 
 # upload images
 @app.post("/upload")
-async def uploads(id: str, file: UploadFile = Form()):
+async def uploads(user_id: str, file: UploadFile = Form()):
     # Initialize minio client
-    print(id)
     client = Minio(
         endpoint=s3_config.get("endpoint"),
         access_key=s3_config.get("access_key"),
@@ -52,7 +51,7 @@ async def uploads(id: str, file: UploadFile = Form()):
     upload_file_to_s3(client, file)
 
     # Write file to tmp folder
-    get_save_file_local(client, file.filename, id)
+    get_save_file_local(client, file.filename, user_id)
     # url = client.presigned_get_object("images", file.filename)
     # print(response)
     # # write bytes of images to files
