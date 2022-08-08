@@ -52,7 +52,6 @@ const MyCamera = ({ navigation }) => {
     const photo = await camera.current.takePhoto({
       enableAutoStabilization: true,
     });
-    console.log(photo);
   };
 
   // requestCameraPermission();

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
-import { Image, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { color } from '../constants/color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
