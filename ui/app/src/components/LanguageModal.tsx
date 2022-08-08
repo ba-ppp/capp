@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
-import { Image, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { color } from '../constants/color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -39,6 +39,9 @@ const LanguageModal = () => {
     },
   });
 
+  const vietnamImage = require('../../assets/vietnam.png');
+  const ukImage = require('../../assets/uk.jpg');
+
   async function handleChooseLanguage(value: string) {
     setModalVisible(false);
     try {
@@ -47,6 +50,21 @@ const LanguageModal = () => {
       // saving error
     }
   }
+
+  const setVietnamese = () => {
+    handleChooseLanguage('vi');
+  };
+
+  const setEnglish = () => {
+    handleChooseLanguage('eng');
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
   const getLanguage = async () => {
     try {
@@ -63,32 +81,20 @@ const LanguageModal = () => {
   return (
     <>
       <View style={styles.tabButton}>
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(true);
-          }}>
+        <TouchableOpacity onPress={openModal}>
           <Image source={languageIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>
       <Modal
         style={styles.modal}
         isVisible={modalVisible}
-        onBackdropPress={() => setModalVisible(false)}>
+        onBackdropPress={closeModal}>
         <View style={styles.modalContent}>
-          <TouchableOpacity onPress={() => handleChooseLanguage('vi')}>
-            <Image
-              source={require('../../assets/vietnam.png')}
-              style={styles.logo}
-            />
+          <TouchableOpacity onPress={setVietnamese}>
+            <Image source={vietnamImage} style={styles.logo} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              handleChooseLanguage('en');
-            }}>
-            <Image
-              source={require('../../assets/uk.jpg')}
-              style={styles.logo}
-            />
+          <TouchableOpacity onPress={setEnglish}>
+            <Image source={ukImage} style={styles.logo} />
           </TouchableOpacity>
         </View>
       </Modal>
