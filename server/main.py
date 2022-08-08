@@ -1,14 +1,17 @@
 import json
 import os
 import sys
-from fastapi import File, UploadFile, FastAPI, BackgroundTasks
+from fastapi import File, Form, UploadFile, FastAPI, BackgroundTasks
+from pydantic import BaseModel
 import uuid
 from fastapi.middleware.cors import CORSMiddleware
-from system.files_upload import *
+from system.process_files import *
 from system.socket import *
 from system.generate_captions import *
 from config.config import path_config
-
+from minio import Minio
+from minio.error import S3Error
+import os
 
 
 app = FastAPI()
@@ -25,34 +28,51 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+class UploadItem(BaseModel):
+    relativePath: str | None = None
+    name: str | None
+    type: str
+    file: UploadFile
+
+
 # upload images
-@app.post('/uploads')
-async def uploads(files: list[UploadFile], background_tasks: BackgroundTasks):
-    background_tasks.add_task(upload_files_sys, files)
-    return {
-        'msg': 'Done!'
-    }
+@app.post("/upload")
+async def uploads(user_id: str, file: UploadFile = Form()):
+    # Initialize minio client
+    client = Minio(
+        endpoint=s3_config.get("endpoint"),
+        access_key=s3_config.get("access_key"),
+        secret_key=s3_config.get("secret_key"),
+        secure=False,
+    )
+
+    # Upload file and create bucket
+    upload_file_to_s3(client, file)
+
+    # Write file to tmp folder
+    get_save_file_local(client, file.filename, user_id)
+    # url = client.presigned_get_object("images", file.filename)
+    # print(response)
+    # # write bytes of images to files
+    # captions = generate_caption(url)
+
+    # print(file.content_type)
+    return {"message": "success"}
+    # background_tasks.add_task(upload_files_sys, files)
+
 
 # start generate captions
-@app.get('/generate')
+@app.get("/generate")
 async def start_socket():
     user_id = str(uuid.uuid4())
-    
-    print(f'User {user_id} connected!', user_id)
+
+    print(f"User {user_id} connected!", user_id)
     client = connect_socket(user_id)
     client.loop_start()
-    for image_file in os.listdir(path_config.get('static_path')):
+    for image_file in os.listdir(path_config.get("static_path")):
         captions = generate_caption(image_file)
         publish(client, json.dumps(captions))
         return
     # image_paths = os.listdir(path_config.get('static_path'))
     # run_background_generate_captions(image_paths)
-
-       
-
-
-
-
-
-    
-

@@ -9,3 +9,4 @@ keras
 fastapi
 python-multipart
 paho-mqtt
+minio
