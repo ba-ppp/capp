@@ -7,15 +7,18 @@ import { NavBarMenu } from "components/NavBarMenu/NavBarMenu";
 import { HomeNavBar } from "components/NavBarMenu/HomeNavBar";
 import { PageNotFound } from "components/PageNotFound";
 import { UploadPage } from "components/UploadPage/UploadPage";
+import { Library } from "components/Library/Library";
 
 function App() {
   const { hasMenuSelect } = useSelector((state: RootState) => state.toggle);
+
   return (
     <div>
       {!hasMenuSelect ? <NavBarMenu /> : <HomeNavBar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/upload" element={<UploadPage />} />
+        <Route path="/library" element={<Library />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

@@ -15,6 +15,6 @@ def connect_socket(user_id):
     client.connect(socket_config.get("broker"), socket_config.get("port"))
     return client
 
-def publish(client, data):
+def publish(client, channel, data):
     time.sleep(1)
-    client.publish(socket_config.get("channel"), data)
+    client.publish(channel, data)

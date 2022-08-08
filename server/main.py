@@ -64,15 +64,18 @@ async def uploads(user_id: str, file: UploadFile = Form()):
 
 # start generate captions
 @app.get("/generate")
-async def start_socket():
-    user_id = str(uuid.uuid4())
+async def start_socket(user_id: str):
 
     print(f"User {user_id} connected!", user_id)
-    client = connect_socket(user_id)
+    server_id = str(uuid.uuid4())
+    client = connect_socket(server_id)
     client.loop_start()
-    for image_file in os.listdir(path_config.get("static_path")):
-        captions = generate_caption(image_file)
-        publish(client, json.dumps(captions))
+    folder_location = f"{path_config['static_path']}{user_id}/"
+    print(folder_location)
+    for image_file in os.listdir(folder_location):
+        captions = generate_caption(user_id, image_file)
+        publish(client, f"captions/{user_id}", json.dumps(captions))
+        print(f"captions/{user_id}")
         return
     # image_paths = os.listdir(path_config.get('static_path'))
     # run_background_generate_captions(image_paths)

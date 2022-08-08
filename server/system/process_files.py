@@ -26,6 +26,9 @@ def upload_file_to_s3(client, file: UploadFile = Form()):
         print(e)
 
 def get_save_file_local(client, filename: str, user_id: str):
+    # create static folder if not exist
+    os.makedirs(path_config['static_path'], exist_ok=True)
+
     folder_location = f"{path_config['static_path']}{user_id}/"
     file_location = f"{folder_location}{filename}"
 

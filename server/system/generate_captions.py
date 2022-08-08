@@ -33,12 +33,12 @@ image_model = CNNModel()
 # Extract features from each image in the directory
 
 # Load and prepare the image
-def generate_caption(image_file):
+def generate_caption(user_id, image_file):
     captions_array = []
     
     if image_file.split(".")[1] == "jpg" or image_file.split(".")[1] == "jpeg":
         # Encode image using CNN Model
-        image = extract_features(image_file, image_model)
+        image = extract_features(user_id, image_file, image_model)
 
         # Generate caption using Decoder RNN Model + BEAM search
         generated_caption = generate_caption_beam_search(
