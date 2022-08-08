@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <>
-      {displayStartScreen ? <StartScreen /> : null}
+      {displayStartScreen && <StartScreen />}
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
