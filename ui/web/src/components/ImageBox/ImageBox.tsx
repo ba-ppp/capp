@@ -4,26 +4,23 @@ import { ReactComponent as OptIcon } from "asset/icons/option-icon.svg";
 
 export default function ImageBox() {
     return (
-        <div>
-            <div className="flex w-full justify-center">
-                <div className="w-72 h-64 mx-12 my-8 bg-bg-200">
-                    <div className="shadow-img flex justify-center items-center">
-                        <img
-                            src={LapKeyboard}
-                            alt="loading..."
-                            className="object-contain h-48"
-                        />
-                    </div>
-                    <div className="flex justify-around items-center h-16">
-                        <div className="text-green-400 font-bold text-xl">
-                            A cat with green eyes
-                        </div>
-                        <span>
-                            <OptIcon className="fill-bg-800 hover:fill-slate-400" />
-                        </span>
-                        <div> </div>
-                    </div>
+        <div className="shadow-img w-full min-w-[160px] bg-bg-200 rounded-lg">
+            <div className="flex justify-center items-center">
+                <img
+                    src={LapKeyboard}
+                    alt="loading..."
+                    className="object-contain h-48"
+                />
+            </div>
+            <div className="flex justify-around items-center p-2 cursor-pointer">
+                <div className="text-mark-200 font-semibold text-xl hover:underline">
+                    A cat with green eyesd da sdds sd sdassd adsd sdas s dasd
+                    asddasd dasdasda sdad a
                 </div>
+                {/* <span>
+                    <OptIcon className="fill-bg-800 hover:fill-slate-400" />
+                </span> */}
+                <div> </div>
             </div>
         </div>
     );
