@@ -19,7 +19,7 @@ export const HomePage = () => {
     <>
       <div className="absolute-full">
         <CustomBackground />
-        <div tw="absolute top-[25rem] left-0 w-full h-full">
+        <div tw="absolute top-[27vh] left-0 w-full h-full">
           <div className="overflow-x-hidden flex flex-col items-center space-y-24">
             <div tw="flex flex-col items-center mb-20">
               <div className="text-6xl text-center">
@@ -32,7 +32,7 @@ export const HomePage = () => {
                   platform to generate caption for each image
                 </span>
               </div>
-              <NavLink to="/upload" className="flex justify-center mt-16">
+              <NavLink to="/library" className="flex justify-center mt-16">
                 <button
                   type="button"
                   className="w-52 h-16 text-bg-200 bg-main-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-3xl text-2xl font-semibold px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

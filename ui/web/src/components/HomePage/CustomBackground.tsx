@@ -32,8 +32,16 @@ export const CustomBackground = () => {
                                 duration: 0.4,
                             },
                         },
+                        events: {
+                            onHover: {
+                                enable: true,
+                                mode: "repulse",
+                            }
+                        }
                     },
+
                     particles: {
+
                         color: {
                             value: "#0a0a39",
                         },
