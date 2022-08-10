@@ -19,18 +19,18 @@ export const HomePage = () => {
     <>
       <div className="absolute-full">
         <CustomBackground />
-        <div tw="absolute top-[27vh] left-0 w-full h-full">
+        <div tw="absolute top-[30vh] left-0 w-full h-full">
           <div className="overflow-x-hidden flex flex-col items-center space-y-24">
             <div tw="flex flex-col items-center mb-20">
               <div className="text-6xl text-center">
                 <span className="font-normal">A PLATFORM BUILT FOR&nbsp;</span>
                 <span className="font-extrabold">IMAGE CAPTION</span>
               </div>
-              <div className="font-normal w-1/3 text-2xl mt-7">
-                <span className="flex text-center">
-                  By using combination Inception-V3 and LSTM, we built a
-                  platform to generate caption for each image
-                </span>
+              <div className="font-normal w-1/2 text-2xl mt-7">
+                <div className="text-center">
+                  By using combination <b>Inception-V3</b> and <b>LSTM</b> this is a platform
+                  to generate caption for each image
+                </div>
               </div>
               <NavLink to="/library" className="flex justify-center mt-16">
                 <button

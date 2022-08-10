@@ -38,7 +38,7 @@ class UploadItem(BaseModel):
 
 # upload images
 @app.post("/upload")
-async def uploads(user_id: str, file: UploadFile = Form()):
+async def uploads(user_id: str, file: UploadFile, background_tasks: BackgroundTasks):
     # Initialize minio client
     client = Minio(
         endpoint=s3_config.get("endpoint"),
@@ -48,34 +48,31 @@ async def uploads(user_id: str, file: UploadFile = Form()):
     )
 
     # Upload file and create bucket
-    upload_file_to_s3(client, file)
+    new_file_name = upload_file_to_s3(client, file)
 
     # Write file to tmp folder
-    get_save_file_local(client, file.filename, user_id)
+    get_save_file_local(client, new_file_name, user_id)
     # url = client.presigned_get_object("images", file.filename)
     # print(response)
     # # write bytes of images to files
     # captions = generate_caption(url)
 
+    background_tasks.add_task(start_socket, user_id, new_file_name)
+
     # print(file.content_type)
     return {"message": "success"}
-    # background_tasks.add_task(upload_files_sys, files)
 
 
 # start generate captions
-@app.get("/generate")
-async def start_socket(user_id: str):
+def start_socket(user_id: str, file_name: str):
 
     print(f"User {user_id} connected!", user_id)
     server_id = str(uuid.uuid4())
     client = connect_socket(server_id)
     client.loop_start()
-    folder_location = f"{path_config['static_path']}{user_id}/"
-    print(folder_location)
-    for image_file in os.listdir(folder_location):
-        captions = generate_caption(user_id, image_file)
-        publish(client, f"captions/{user_id}", json.dumps(captions))
-        print(f"captions/{user_id}")
-        return
-    # image_paths = os.listdir(path_config.get('static_path'))
-    # run_background_generate_captions(image_paths)
+
+    captions = generate_caption(user_id, file_name)
+
+    publish(client, f"captions/{user_id}", json.dumps(captions))
+    print(f"captions/{user_id}")
+    return
