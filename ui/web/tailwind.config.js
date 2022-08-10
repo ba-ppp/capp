@@ -33,9 +33,13 @@ module.exports = {
                 'nav': '0px 4px 4px rgba(0, 0, 0, 0.25)',
                 'ser': '4px 5px 29px rgba(0, 0, 0, 0.25)',
                 'img': '0px 0px 4px rgba(0, 0, 0, 0.25)'
-              }
-            
+            },
         },
-        plugins: [],
+        variants: {
+            lineClamp: ['responsive', 'hover']
+        }
     },
+    plugins: [
+        require('@tailwindcss/line-clamp'),
+      ],
 }
