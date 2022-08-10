@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { toggleShowUploadModal } from "app/slices/toggleSlice";
-import { ModalOptions } from "components/enums/enums";
+import { ModalOptions } from "enums/enums";
 import React, {
   forwardRef,
   ReactElement,
