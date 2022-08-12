@@ -20,6 +20,7 @@
     "react-native-drop-down-item": "^1.1.0",
     "react-native-dropdown": "^0.0.6",
     "react-native-dropdown-menu": "^2.0.0",
+    "react-native-element-dropdown": "^2.1.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^2.5.0",
     "react-native-image-picker": "^4.8.4",

@@ -35,7 +35,7 @@ const CameraButton = ({ navigation }) => {
 const HomeNavigator = ({ navigation }) => {
   const styles = StyleSheet.create({
     tabBar: {
-      height: 100,
+      height: 50,
       paddingHorizontal: 70,
       borderTopLeftRadius: 50,
       borderTopRightRadius: 50,

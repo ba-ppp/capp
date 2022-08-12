@@ -33,8 +33,7 @@ const HomeScreen = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginBottom: 10,
-      flexWrap: "wrap",
-
+      flexWrap: 'wrap',
     },
     imageItemContainer: {
       marginTop: 20,
@@ -44,7 +43,7 @@ const HomeScreen = () => {
       alignItems: 'center',
       justifyContent: 'flex-end',
       width: windowWidth / 2.3,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       borderRadius: 10,
     },
     image: {
@@ -70,7 +69,7 @@ const HomeScreen = () => {
     },
     header: {
       justifyContent: 'center',
-      height: 100,
+      height: 70,
       alignItems: 'center',
       paddingBottom: 5,
       elevation: 1,
@@ -154,27 +153,27 @@ const HomeScreen = () => {
       <View style={styles.listItemContainer}>
         {images?.length
           ? images.map(imageObject => {
-            return (
-              <View key={imageObject.uri} style={styles.imageItemContainer}>
-                <Image
-                  resizeMode="contain"
-                  source={{
-                    uri: 'data:image/png;base64,' + imageObject.base64,
-                  }}
-                  style={[
-                    styles.image,
-                    {
-                      height: Math.min(
-                        imageObject.height,
-                        (imageObject.height * windowWidth) /
-                        imageObject.width /
-                        2,
-                      ),
-                    },
-                  ]}
-                />
-                <View style={styles.imageItemFooter}>
-                  {/* <Pressable
+              return (
+                <View key={imageObject.uri} style={styles.imageItemContainer}>
+                  <Image
+                    resizeMode="contain"
+                    source={{
+                      uri: 'data:image/png;base64,' + imageObject.base64,
+                    }}
+                    style={[
+                      styles.image,
+                      {
+                        height: Math.min(
+                          imageObject.height,
+                          (imageObject.height * windowWidth) /
+                            imageObject.width /
+                            2,
+                        ),
+                      },
+                    ]}
+                  />
+                  <View style={styles.imageItemFooter}>
+                    {/* <Pressable
                     onPress={() => {
                       Alert.alert('Read aloud caption!');
                     }}>
@@ -184,67 +183,69 @@ const HomeScreen = () => {
                     />
                   </Pressable> */}
 
-                  <SelectCountry
-                    style={styles.dropDownIcon}
-                    imageStyle={styles.icon}
-                    iconStyle={styles.icon}
-                    maxHeight={200}
-                    valueField="value"
-                    labelField="lable"
-                    imageField="image"
-                    placeholder=""
-                    onChange={e => {
-                      setCountry(e.value);
-                    }}
-                    
-                    renderRightIcon={() => (
-                      <Image
-                      style={styles.icon}
-                      source={require('../../../assets/menu.png')}
+                    <SelectCountry
+                      style={styles.dropDownIcon}
+                      imageStyle={styles.icon}
+                      iconStyle={styles.icon}
+                      maxHeight={200}
+                      valueField="value"
+                      labelField="lable"
+                      imageField="image"
+                      placeholder=""
+                      onChange={e => {
+                        setCountry(e.value);
+                      }}
+                      renderRightIcon={() => (
+                        <Image
+                          style={styles.icon}
+                          source={require('../../../assets/menu.png')}
+                        />
+                      )}
+                      data={[
+                        {
+                          value: '1',
+                          lable: '',
+                          image: require('../../../assets/volume_icon.png'),
+                        },
+                        {
+                          value: '2',
+                          lable: '',
+                          image: require('../../../assets/download.png'),
+                        },
+                      ]}
                     />
-                    )}
-                    data={[
-                      {
-                        value: '1',
-                        lable: '',
-                        image: require('../../../assets/volume_icon.png')
-                      },
-                      {
-                        value: '2',
-                        lable: '',
-                        image: require('../../../assets/download.png')
-                      },
-                    ]}
-                  />
 
-                  <Dropdown
-                    style={styles.dropDown}
-                    placeholder='Hello! This is a caption a caption a caption a caption a caption!'
-                    placeholderStyle={styles.dropDownText}
-                    containerStyle={styles.dropDownBox}
-                    selectedTextProps={{
-                      numberOfLines: 1
-                    }}
-                    labelField="label"
-                    valueField="value"
-                    value={value}
-                    onChange={item => {
-                      setValue(item.value);
-                      setIsFocus(false);
-                    }}
-                    selectedTextStyle={styles.dropDownBoxText}
-                    data={[
-                      { label: 'Hello! This is a caption a caption a caption a caption a caption!', value: '1' }
-                    ]}
-                  />
-
+                    <Dropdown
+                      style={styles.dropDown}
+                      placeholder="Hello! This is a caption a caption a caption a caption a caption!"
+                      placeholderStyle={styles.dropDownText}
+                      containerStyle={styles.dropDownBox}
+                      selectedTextProps={{
+                        numberOfLines: 1,
+                      }}
+                      labelField="label"
+                      valueField="value"
+                      value={value}
+                      onChange={item => {
+                        setValue(item.value);
+                        setIsFocus(false);
+                      }}
+                      selectedTextStyle={styles.dropDownBoxText}
+                      data={[
+                        {
+                          label:
+                            'Hello! This is a caption a caption a caption a caption a caption!',
+                          value: '1',
+                        },
+                      ]}
+                    />
+                  </View>
                 </View>
-              </View>
-            );
-          })
+              );
+            })
           : null}
       </View>
-    </ScrollView >
+    </ScrollView>
   );
 
   return (
@@ -264,4 +265,3 @@ export default HomeScreen;
 function componentDidMount() {
   throw new Error('Function not implemented.');
 }
-
