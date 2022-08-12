@@ -13,7 +13,7 @@ def upload_file_to_s3(client, file: UploadFile = Form()):
         found = client.bucket_exists(bucket_name)
         if not found:
             client.make_bucket(bucket_name)
-        
+
         file_extension = os.path.splitext(file.filename)[1]
         new_file_name = f"{str(uuid4())}.{file_extension}"
 
@@ -31,9 +31,10 @@ def upload_file_to_s3(client, file: UploadFile = Form()):
     except S3Error as e:
         print(e)
 
+
 def get_save_file_local(client, filename: str, user_id: str):
     # create static folder if not exist
-    os.makedirs(path_config['static_path'], exist_ok=True)
+    os.makedirs(path_config["static_path"], exist_ok=True)
 
     folder_location = f"{path_config['static_path']}{user_id}/"
     file_location = f"{folder_location}{filename}"

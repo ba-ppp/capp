@@ -1,7 +1,7 @@
-
 from paho.mqtt import client as mqtt_client
 from config.config import socket_config
 import time
+
 
 def connect_socket(user_id):
     def on_connect(client, userdata, flags, rc):
@@ -14,6 +14,7 @@ def connect_socket(user_id):
     client.on_connect = on_connect
     client.connect(socket_config.get("broker"), socket_config.get("port"))
     return client
+
 
 def publish(client, channel, data):
     time.sleep(1)
