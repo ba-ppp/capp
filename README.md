@@ -37,3 +37,7 @@ Capp using combination Inception-V3 and LSTM this is a platform to generate capt
     ```docker run -d --name emqx -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx```
     - Running server:
     ```uvicorn main:app --reload```
+
+## 😏 Testing
+- Go to ```static``` folder in ```server``` folder:
+- Find your images here. Gud luck 😍
