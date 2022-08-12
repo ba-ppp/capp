@@ -56,7 +56,7 @@ export const UppyUploadModal = forwardRef(
         <div
           className={`bg-white px-6 py-4 rounded-lg z-20 ${
             isOpen
-              ? "h-[60vh] w-[50rem] absolute top-[20vh] "
+              ? "min-h-[60vh] w-[50rem] absolute top-[20vh] "
               : "hidden invisible"
           }`}
           css={[isOpen ? "left: calc(50% - 25rem);" : ""]}
