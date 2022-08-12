@@ -19,23 +19,23 @@ export const HomePage = () => {
     <>
       <div className="absolute-full">
         <CustomBackground />
-        <div tw="absolute top-[25rem] left-0 w-full h-full">
+        <div tw="absolute top-[30vh] left-0 w-full h-full">
           <div className="overflow-x-hidden flex flex-col items-center space-y-24">
             <div tw="flex flex-col items-center mb-20">
               <div className="text-6xl text-center">
                 <span className="font-normal">A PLATFORM BUILT FOR&nbsp;</span>
                 <span className="font-extrabold">IMAGE CAPTION</span>
               </div>
-              <div className="font-normal w-1/3 text-2xl mt-7">
-                <span className="flex text-center">
-                  By using combination Inception-V3 and LSTM, we built a
-                  platform to generate caption for each image
-                </span>
+              <div className="font-normal w-1/2 text-2xl mt-7">
+                <div className="text-center">
+                  By using combination <b>Inception-V3</b> and <b>LSTM</b> this is a platform
+                  to generate caption for each image
+                </div>
               </div>
-              <NavLink to="/upload" className="flex justify-center mt-16">
+              <NavLink to="/library" className="flex justify-center mt-16 no-underline">
                 <button
                   type="button"
-                  className="w-52 h-16 text-bg-200 bg-main-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-3xl text-2xl font-semibold px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="border-0 w-52 h-16 text-bg-200 bg-main-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-3xl text-2xl font-semibold px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Start for free
                 </button>
@@ -105,15 +105,15 @@ export const HomePage = () => {
                   </div>
 
                   <div className="flex mt-[104px]">
-                    <div className="w-[15rem] flex flex-col bg-white items-center mx-16 rounded-3xl lg:w-[20rem] xl:w-[36rem] h-[138px] border-4 border-bg-600">
+                    <div className="w-[15rem] flex flex-col bg-white items-center mx-16 rounded-3xl lg:w-[20rem] xl:w-[36rem] h-[138px] border-4 border-solid border-bg-600">
                       <span className="text-2xl font-semibold mt-4">
-                        VietNam
+                        Viet Nam
                       </span>
                       <span>
                         <SupportViFlag />
                       </span>
                     </div>
-                    <div className="w-[15rem] flex flex-col bg-white items-center justify-center px-5 mx-16 rounded-3xl lg:w-[20rem] xl:w-[36rem] h-[138px] border-4 border-bg-600">
+                    <div className="w-[15rem] flex flex-col bg-white items-center justify-center px-5 mx-16 rounded-3xl lg:w-[20rem] xl:w-[36rem] h-[138px] border-solid border-4 border-bg-600">
                       <span className="text-2xl font-semibold">English</span>
                       <div className="flex">
                         <span className="mr-8">
@@ -189,14 +189,14 @@ export const HomePage = () => {
                     </div>
                   </div>
                   <div className="h-32 w-full mb-5 flex items-center ml-16 lg:ml-20">
-                    <NavLink to="/" className="mx-16">
+                    <NavLink to="/" className="mx-16 no-underline">
                       <div className="flex text-2xl md:text-5xl items-center">
                         <span className="text-main-800 font-black">Image</span>
                         <span className="text-bg-600 font-black">Caption</span>
                       </div>
                     </NavLink>
                     <div className="text-[10px] md:text-base lg:text-xl font-semibold">
-                      <NavLink to="/service" className="mr-0.5 md:mr-5">
+                      <NavLink to="/service" className="mr-0.5 md:mr-5 no-underline">
                         Terms of services
                       </NavLink>
                       <span className="border-x border-x-bg-800">

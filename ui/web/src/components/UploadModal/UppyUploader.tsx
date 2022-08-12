@@ -1,14 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
-import React, { useEffect } from "react";
+import React from "react";
 import { Dashboard, ProgressBar, useUppy } from "@uppy/react";
-import Uppy, { UppyFile, UppyOptions } from "@uppy/core";
-import UppyAwsS3 from '@uppy/aws-s3';
+import Uppy, { UppyOptions } from "@uppy/core";
 import XHRUpload from "@uppy/xhr-upload";
-import { uploadCustomStyles } from "./upload.twin";
-import Minio from "minio";
+import { uploadCustomStyles } from "./uppy.twin";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
+import { createAndSaveUserId } from "utils/utils";
 
 const basicTypes = [".jpg", ".jpeg", ".png"];
 
@@ -18,40 +17,42 @@ const uppyOptions: UppyOptions = {
   debug: false,
   restrictions: {
     allowedFileTypes: [...basicTypes],
-  
   },
-  // locale: {
-  //   strings: {
-  //     companionError: "Connection with companion failed",
-  //   },
-  // },
 };
 
-export const UploadPage = () => {
+
+
+export const UppyUploader = () => {
+  const userId = createAndSaveUserId();
 
   const uppyInstance = useUppy(() => {
-    return new Uppy({ ...uppyOptions })
-    .use(XHRUpload, { endpoint: `http://localhost:8000/upload?user_id=a`, id: 'uppyUpload' })
+    return new Uppy({
+      ...uppyOptions,
+    }).use(XHRUpload, {
+      endpoint: `http://localhost:8000/upload?user_id=${userId}`,
+      id: "uppyUpload",
+    });
   });
 
   return (
-    <div css={uploadCustomStyles} className="mt-36">
-      <div>a</div>
+    <div css={uploadCustomStyles} className="">
       <Dashboard
         id="uppyDashboard"
         uppy={uppyInstance}
         // plugins={["Url"]}
         height={300}
+        width={800}
         showProgressDetails={true}
         proudlyDisplayPoweredByUppy={false}
+        draggable={true}
         // inline={true}
       />
-       <ProgressBar
-      // assuming `props.uppy` contains an Uppy instance:
-      uppy={uppyInstance}
-      fixed
-      hideAfterFinish
-    />
+      {/* <ProgressBar
+        // assuming `props.uppy` contains an Uppy instance:
+        uppy={uppyInstance}
+        fixed
+        hideAfterFinish
+      /> */}
     </div>
   );
 };

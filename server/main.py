@@ -13,7 +13,6 @@ from minio import Minio
 from minio.error import S3Error
 import os
 
-
 app = FastAPI()
 origins = [
     "*",
@@ -28,17 +27,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-class UploadItem(BaseModel):
-    relativePath: str | None = None
-    name: str | None
-    type: str
-    file: UploadFile
-
+# server connect socket
+server_id = str(uuid.uuid4())
+client = connect_socket(server_id)
+client.loop_start()
 
 # upload images
 @app.post("/upload")
-async def uploads(user_id: str, file: UploadFile = Form()):
+async def uploads(user_id: str, file: UploadFile, background_tasks: BackgroundTasks):
     # Initialize minio client
     client = Minio(
         endpoint=s3_config.get("endpoint"),
@@ -48,31 +44,26 @@ async def uploads(user_id: str, file: UploadFile = Form()):
     )
 
     # Upload file and create bucket
-    upload_file_to_s3(client, file)
+    new_file_name = upload_file_to_s3(client, file)
 
     # Write file to tmp folder
-    get_save_file_local(client, file.filename, user_id)
-    # url = client.presigned_get_object("images", file.filename)
-    # print(response)
-    # # write bytes of images to files
-    # captions = generate_caption(url)
+    get_save_file_local(client, new_file_name, user_id)
+
+    # start generate captions
+    background_tasks.add_task(start_socket, user_id, new_file_name)
 
     # print(file.content_type)
     return {"message": "success"}
-    # background_tasks.add_task(upload_files_sys, files)
 
 
 # start generate captions
-@app.get("/generate")
-async def start_socket():
-    user_id = str(uuid.uuid4())
+def start_socket(user_id: str, file_name: str):
 
     print(f"User {user_id} connected!", user_id)
-    client = connect_socket(user_id)
-    client.loop_start()
-    for image_file in os.listdir(path_config.get("static_path")):
-        captions = generate_caption(image_file)
-        publish(client, json.dumps(captions))
-        return
-    # image_paths = os.listdir(path_config.get('static_path'))
-    # run_background_generate_captions(image_paths)
+
+    captions = generate_caption(user_id, file_name)
+
+    # send captions to client
+    publish(client, f"captions/{user_id}", json.dumps(captions))
+    print(f"captions/{user_id}")
+    return
