@@ -14,12 +14,11 @@ type Props = {
 export const ThumbnailItem = (props: Props) => {
   const { imageUrl, caption } = props;
   return (
-    <Card sx={{ maxWidth: 224 }} className="shadow-none mx-auto relative">
+    <Card sx={{ minWidth: 224 }} className="shadow-none mx-auto relative">
       <CardMedia
         component="img"
         alt="img"
-        height="126"
-        width="224"
+        className="w-[17.5rem] h-[10rem] xl:w-[14rem] xl:h-[8rem]"
         image={imageUrl}
       />
       <div className="absolute top-2 left-2 text-[14px] text-white border border-purple-500 bg-[#5551ff] p-2 rounded">
@@ -33,7 +32,7 @@ export const ThumbnailItem = (props: Props) => {
         >
           {caption}
         </Typography>
-        <div className="absolute bottom-0 right-0 w-[40px] h-[40px] flex items-center">
+        <div className="border_blue cursor-pointer absolute bottom-0 right-0 w-[40px] h-[40px] hover:w-[38px] hover:h-[38px] flex items-center">
           <div className="grow text-center">
             <ArrowDown />
           </div>
@@ -41,7 +40,7 @@ export const ThumbnailItem = (props: Props) => {
       </CardContent>
       <div className="flex justify-between text-gray-400 text-[12px]">
         <span>04 Aug 2022 - 12:32</span>
-        <span>JPG</span>
+      <span>JPG</span>
       </div>
     </Card>
   );
