@@ -7,6 +7,7 @@ import { toggleShowUploadModal } from "app/slices/toggleSlice";
 import { getUserId } from "utils/utils";
 import { Client, Message } from "paho-mqtt";
 import { SearchBar } from "./SearchBar";
+import { modifyThumbnailItem } from "app/slices/library.slice";
 
 
 export function NavBarMenu() {
@@ -32,7 +33,8 @@ export function NavBarMenu() {
 
     // called when a message arrives
     const onMessageArrived = (message: Message) => {
-      console.log("onMessageArrived:" + message.payloadString);
+      const data = JSON.parse(message.payloadString);
+      dispatch(modifyThumbnailItem(data));
     };
     // set callback handlers
     client.onConnectionLost = onConnectionLost;
@@ -42,6 +44,7 @@ export function NavBarMenu() {
     client.connect({ onSuccess: onConnect });
 
     // called when the client connects
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -52,7 +55,7 @@ export function NavBarMenu() {
          
          <SearchBar />
           <button
-            className="justify-self-end border border-purple-200 p-3 flex items-center bg-purple-500 rounded-md text-white space-x-2"
+            className="cursor-pointer justify-self-end border border-purple-200 p-3 flex items-center bg-purple-500 rounded-md text-white space-x-2"
             onClick={handleUpload}
           >
             <UploadSvg fill="#fff" />
