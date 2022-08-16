@@ -33,7 +33,7 @@ image_model = CNNModel()
 
 # Load and prepare the image
 def generate_caption(user_id: str, file_name: str):
-    captions_array = []
+    result = ''
 
     file_extension = os.path.splitext(file_name)[1]
 
@@ -46,10 +46,10 @@ def generate_caption(user_id: str, file_name: str):
             caption_model, tokenizer, image, max_length, beam_index=beam_search_k
         )
         # Remove startseq and endseq
-        caption = "Caption: " + generated_caption.split()[1].capitalize()
+        caption = generated_caption.split()[1].capitalize()
         for x in generated_caption.split()[2 : len(generated_caption.split()) - 1]:
             caption = caption + " " + x
         caption += "."
 
-        captions_array.append(caption)
-    return captions_array
+        result = caption
+    return result
