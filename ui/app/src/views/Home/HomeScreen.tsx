@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createRef, useRef } from 'react';
 import {
   Dimensions,
   Pressable,
@@ -10,12 +10,15 @@ import {
   Image,
   Alert,
   Button,
+  Clipboard,
 } from 'react-native';
 
 import { launchImageLibrary } from 'react-native-image-picker';
 import { color } from '../../constants/color';
-import { Dropdown } from 'react-native-element-dropdown';
-import { SelectCountry } from 'react-native-element-dropdown';
+
+import ActionSheet from "react-native-actions-sheet";
+
+
 
 const HomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -32,8 +35,7 @@ const HomeScreen = () => {
     listItemContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginBottom: 10,
-      flexWrap: 'wrap',
+      flexWrap: "wrap",
     },
     imageItemContainer: {
       marginTop: 20,
@@ -43,7 +45,7 @@ const HomeScreen = () => {
       alignItems: 'center',
       justifyContent: 'flex-end',
       width: windowWidth / 2.3,
-      backgroundColor: 'white',
+      backgroundColor: "white",
       borderRadius: 10,
     },
     image: {
@@ -63,13 +65,16 @@ const HomeScreen = () => {
     },
     caption: {
       fontSize: 16,
-      width: windowWidth / 2.3,
+      width: windowWidth / 2.3 - 10,
       textAlign: 'center',
       flexGrow: 1,
+      marginLeft: 5,
+      marginRight: 5,
+      marginBottom: 5,
     },
     header: {
       justifyContent: 'center',
-      height: 70,
+      height: windowHeight/10,
       alignItems: 'center',
       paddingBottom: 5,
       elevation: 1,
@@ -93,35 +98,45 @@ const HomeScreen = () => {
       fontSize: 60,
     },
     scrollView: {
-      marginBottom: 100,
+      marginBottom: windowHeight/10,
     },
-    dropDown: {
-      width: windowWidth / 2.3 - 46,
-      alignItems: 'flex-start',
-      justifyContent: 'center',
+    menuStyle: {
+      borderRadius: 0,
+      width: windowHeight / 2,
+      backgroundColor: '#00000000'
     },
-    dropDownText: {
-      fontSize: 16,
-      justifyContent: 'center',
+    captionInfo: {
+      fontSize: 20,
+      textAlign: 'center',
+      marginBottom: 1,
+      backgroundColor: '#F5FCFF',
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      padding: 20,
+    },
+    buttonMenu: {
       alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+      flexDirection: "column",
+      marginBottom: 1,
     },
-    dropDownBox: {
-      width: windowWidth / 2.3 - 46,
-      fontSize: 16,
-      justifyContent: 'center',
+    buttonCencel: {
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+      flexDirection: "column",
+      marginTop: 5,
+      marginBottom: 10,
+      borderRadius: 10,
     },
-    dropDownBoxText: {
-      fontSize: 16,
+    button: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 20,
     },
-    dropDownIcon: {
-      width: 36,
-      marginRight: 10,
-      alignItems: 'flex-start',
-      justifyContent: 'center',
-    },
-    dropDownBoxIcon: {
-      resizeMode: 'contain',
-    },
+    buttonText: {
+      fontSize: 20,
+      color: '#1E90FF',
+    }
   });
 
   const openLibrary = () => {
@@ -144,108 +159,109 @@ const HomeScreen = () => {
     </TouchableOpacity>
   );
 
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const [country, setCountry] = useState('1');
+  const actionSheetRef = useRef<ActionSheet>(null);
 
   const imageList = (
     <ScrollView style={styles.scrollView}>
       <View style={styles.listItemContainer}>
         {images?.length
           ? images.map(imageObject => {
-              return (
-                <View key={imageObject.uri} style={styles.imageItemContainer}>
-                  <Image
-                    resizeMode="contain"
-                    source={{
-                      uri: 'data:image/png;base64,' + imageObject.base64,
-                    }}
-                    style={[
-                      styles.image,
-                      {
-                        height: Math.min(
-                          imageObject.height,
-                          (imageObject.height * windowWidth) /
-                            imageObject.width /
-                            2,
-                        ),
-                      },
-                    ]}
-                  />
-                  <View style={styles.imageItemFooter}>
-                    {/* <Pressable
+            return (
+              <View key={imageObject.uri} style={styles.imageItemContainer}>
+                <Image
+                  resizeMode="contain"
+                  source={{
+                    uri: 'data:image/png;base64,' + imageObject.base64,
+                  }}
+                  style={[
+                    styles.image,
+                    {
+                      height: Math.min(
+                        imageObject.height,
+                        (imageObject.height * windowWidth) /
+                        imageObject.width /
+                        2,
+                      ),
+                    },
+                  ]}
+                />
+                <View style={styles.imageItemFooter}>
+                  <TouchableOpacity
                     onPress={() => {
-                      Alert.alert('Read aloud caption!');
-                    }}>
-                    <Image
-                      style={styles.volumeIcon}
-                      source={require('../../../assets/volume_icon.png')}
-                    />
-                  </Pressable> */}
-
-                    <SelectCountry
-                      style={styles.dropDownIcon}
-                      imageStyle={styles.icon}
-                      iconStyle={styles.icon}
-                      maxHeight={200}
-                      valueField="value"
-                      labelField="lable"
-                      imageField="image"
-                      placeholder=""
-                      onChange={e => {
-                        setCountry(e.value);
-                      }}
-                      renderRightIcon={() => (
-                        <Image
-                          style={styles.icon}
-                          source={require('../../../assets/menu.png')}
-                        />
-                      )}
-                      data={[
-                        {
-                          value: '1',
-                          lable: '',
-                          image: require('../../../assets/volume_icon.png'),
-                        },
-                        {
-                          value: '2',
-                          lable: '',
-                          image: require('../../../assets/download.png'),
-                        },
-                      ]}
-                    />
-
-                    <Dropdown
-                      style={styles.dropDown}
-                      placeholder="Hello! This is a caption a caption a caption a caption a caption!"
-                      placeholderStyle={styles.dropDownText}
-                      containerStyle={styles.dropDownBox}
-                      selectedTextProps={{
-                        numberOfLines: 1,
-                      }}
-                      labelField="label"
-                      valueField="value"
-                      value={value}
-                      onChange={item => {
-                        setValue(item.value);
-                        setIsFocus(false);
-                      }}
-                      selectedTextStyle={styles.dropDownBoxText}
-                      data={[
-                        {
-                          label:
-                            'Hello! This is a caption a caption a caption a caption a caption!',
-                          value: '1',
-                        },
-                      ]}
-                    />
-                  </View>
+                      actionSheetRef.current?.setModalVisible();
+                    }}
+                  >
+                    <Text numberOfLines={1} style={styles.caption}>
+                      This is a caption a caption a caption a caption!
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-              );
-            })
+                <ActionSheet
+                  ref={actionSheetRef}
+                  // statusBarTranslucent
+                  // bounceOnOpen={true}
+                  // drawUnderStatusBar={true}
+                  // bounciness={4}
+                  // gestureEnabled={true}
+                  // defaultOverlayOpacity={0.3}
+                  containerStyle={styles.menuStyle}
+                  indicatorStyle={{ backgroundColor: 'black' }}
+                >
+                  <View>
+                    <Text style={styles.captionInfo}>
+                      This is a caption a caption a caption a caption!
+                    </Text>
+                    <View style={styles.buttonMenu}>
+                      <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                          Alert.alert('Read aloud caption!');
+                        }}>
+      
+                        <Text style={styles.buttonText}>Volume</Text>
+                      </Pressable>
+                    </View>
+                    <View style={[
+                      styles.buttonMenu,
+                      {
+                        borderBottomLeftRadius: 10,
+                        borderBottomRightRadius: 10,
+                      }]}>
+                      <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                          Clipboard.setString("This is a caption a caption a caption a caption!");
+                          actionSheetRef.current?.hide();
+                        }}>
+                        
+                        <Text style={styles.buttonText}>Copy</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.buttonCencel}>
+                      <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                          actionSheetRef.current?.hide();
+                        }}>
+                        <Text style={[
+                          styles.buttonText,
+                          { color: 'red' }
+                        ]}>Cancel</Text>
+                      </Pressable>
+
+                    </View>
+                  </View>
+
+                </ActionSheet>
+
+
+              </View>
+
+            );
+          })
           : null}
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 
   return (
@@ -262,6 +278,4 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-function componentDidMount() {
-  throw new Error('Function not implemented.');
-}
+
