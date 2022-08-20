@@ -29,7 +29,7 @@
     "react-native-screens": "^3.14.1",
     "react-native-select-dropdown": "^2.0.4",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-vision-camera": "^2.14.0",
+    "react-native-vision-camera": "^2.14.1",
     "twrnc": "^3.3.2"
   },
   "devDependencies": {
