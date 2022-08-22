@@ -1,11 +1,10 @@
-from uuid import uuid4
 from fastapi import UploadFile, Form
 from minio.error import S3Error
 from config.config import *
 import os
 
 
-def upload_file_to_s3(client, file: UploadFile = Form()):
+def upload_file_to_s3(client, file_id, file: UploadFile = Form()):
     try:
         bucket_name = s3_config.get("bucket_name")
 
@@ -15,7 +14,7 @@ def upload_file_to_s3(client, file: UploadFile = Form()):
             client.make_bucket(bucket_name)
 
         file_extension = os.path.splitext(file.filename)[1]
-        new_file_name = f"{str(uuid4())}.{file_extension}"
+        new_file_name = f"{file_id}.{file_extension}"
 
         # upload file to s3
         client.put_object(
