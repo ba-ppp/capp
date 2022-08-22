@@ -11,6 +11,7 @@ import {
   Alert,
   Button,
   Clipboard,
+  ImageBackground,
 } from 'react-native';
 
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -45,8 +46,8 @@ const HomeScreen = () => {
       alignItems: 'center',
       justifyContent: 'flex-end',
       width: windowWidth / 2.3,
-      backgroundColor: "white",
-      borderRadius: 10,
+      // backgroundColor: "white",
+      // borderRadius: 10,
     },
     image: {
       width: windowWidth / 2.3,
@@ -74,7 +75,7 @@ const HomeScreen = () => {
     },
     header: {
       justifyContent: 'center',
-      height: windowHeight/10,
+      height: windowHeight / 10,
       alignItems: 'center',
       paddingBottom: 5,
       elevation: 1,
@@ -98,35 +99,22 @@ const HomeScreen = () => {
       fontSize: 60,
     },
     scrollView: {
-      marginBottom: windowHeight/10,
+      marginBottom: windowHeight / 10,
     },
     menuStyle: {
-      borderRadius: 0,
-      width: windowHeight / 2,
-      backgroundColor: '#00000000'
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      backgroundColor: 'white'
     },
     captionInfo: {
       fontSize: 20,
       textAlign: 'center',
-      marginBottom: 1,
-      backgroundColor: '#F5FCFF',
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
       padding: 20,
+      borderBottomWidth: 1,
     },
     buttonMenu: {
       alignItems: 'center',
-      backgroundColor: '#F5FCFF',
       flexDirection: "column",
-      marginBottom: 1,
-    },
-    buttonCencel: {
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-      flexDirection: "column",
-      marginTop: 5,
-      marginBottom: 10,
-      borderRadius: 10,
     },
     button: {
       flexDirection: 'row',
@@ -168,7 +156,8 @@ const HomeScreen = () => {
           ? images.map(imageObject => {
             return (
               <View key={imageObject.uri} style={styles.imageItemContainer}>
-                <Image
+
+                <ImageBackground
                   resizeMode="contain"
                   source={{
                     uri: 'data:image/png;base64,' + imageObject.base64,
@@ -176,15 +165,31 @@ const HomeScreen = () => {
                   style={[
                     styles.image,
                     {
-                      height: Math.min(
-                        imageObject.height,
-                        (imageObject.height * windowWidth) /
-                        imageObject.width /
-                        2,
-                      ),
+                      // height: Math.min(
+                      //   imageObject.height,
+                      //   (imageObject.height * windowWidth) /
+                      //   imageObject.width /
+                      //   2,
+                      // ),
                     },
                   ]}
-                />
+                  imageStyle={{
+                    width: windowWidth / 2.3,
+                    height: windowWidth / 2.3,
+                    resizeMode: 'stretch',
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      height: windowWidth / 2.3,
+                      width: windowWidth / 2.3,
+                      justifyContent: "center",
+                      alignItems: 'center',
+                    }}
+                  >
+                  </View>
+                </ImageBackground>
                 <View style={styles.imageItemFooter}>
                   <TouchableOpacity
                     onPress={() => {
@@ -198,12 +203,12 @@ const HomeScreen = () => {
                 </View>
                 <ActionSheet
                   ref={actionSheetRef}
-                  // statusBarTranslucent
-                  // bounceOnOpen={true}
-                  // drawUnderStatusBar={true}
-                  // bounciness={4}
-                  // gestureEnabled={true}
-                  // defaultOverlayOpacity={0.3}
+                  statusBarTranslucent
+                  bounceOnOpen={true}
+                  drawUnderStatusBar={true}
+                  bounciness={4}
+                  gestureEnabled={true}
+                  defaultOverlayOpacity={0.3}
                   containerStyle={styles.menuStyle}
                   indicatorStyle={{ backgroundColor: 'black' }}
                 >
@@ -211,44 +216,29 @@ const HomeScreen = () => {
                     <Text style={styles.captionInfo}>
                       This is a caption a caption a caption a caption!
                     </Text>
-                    <View style={styles.buttonMenu}>
+                    <View style={[
+                      styles.buttonMenu,
+                      {borderBottomWidth: 1,},
+                    ]}>
                       <Pressable
                         style={styles.button}
                         onPress={() => {
                           Alert.alert('Read aloud caption!');
                         }}>
-      
+
                         <Text style={styles.buttonText}>Volume</Text>
                       </Pressable>
                     </View>
-                    <View style={[
-                      styles.buttonMenu,
-                      {
-                        borderBottomLeftRadius: 10,
-                        borderBottomRightRadius: 10,
-                      }]}>
+                    <View style={styles.buttonMenu }>
                       <Pressable
                         style={styles.button}
                         onPress={() => {
                           Clipboard.setString("This is a caption a caption a caption a caption!");
                           actionSheetRef.current?.hide();
                         }}>
-                        
+
                         <Text style={styles.buttonText}>Copy</Text>
                       </Pressable>
-                    </View>
-                    <View style={styles.buttonCencel}>
-                      <Pressable
-                        style={styles.button}
-                        onPress={() => {
-                          actionSheetRef.current?.hide();
-                        }}>
-                        <Text style={[
-                          styles.buttonText,
-                          { color: 'red' }
-                        ]}>Cancel</Text>
-                      </Pressable>
-
                     </View>
                   </View>
 
