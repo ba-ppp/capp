@@ -5,6 +5,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ReactComponent as ArrowDown } from "asset/icons/arrow_drop_down.svg";
+import DefaultImage from "asset/images/default.png";
+import { IThumbnailItem } from "types/utils.types";
+import { getStatusText, isErrorItem } from "utils/utils";
 
 type Props = {
   imageUrl: string;
@@ -12,15 +15,14 @@ type Props = {
 };
 
 export const ThumbnailItem = (props: Props) => {
-  const { imageUrl, caption } = props;
+  const { item } = props;
+  const { caption, imageURL, statusCode, uploadedAt, updatedAt } = item;
+
   return (
-    <Card sx={{ maxWidth: 224 }} className="shadow-none mx-auto relative">
-      <CardMedia
-        component="img"
-        alt="img"
-        height="126"
-        width="224"
-        image={imageUrl}
+    <Card sx={{ minWidth: 224 }} className="shadow-none mx-auto relative">
+      <div
+        className="w-full h-[10rem] bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${imageURL ?? DefaultImage})` }}
       />
       <div className="absolute top-2 left-2 text-[14px] text-white border border-purple-500 bg-[#5551ff] p-2 rounded">
         Draft
@@ -33,7 +35,7 @@ export const ThumbnailItem = (props: Props) => {
         >
           {caption}
         </Typography>
-        <div className="absolute bottom-0 right-0 w-[40px] h-[40px] flex items-center">
+        <div className="border_blue cursor-pointer absolute top-0 bottom-0 right-0 w-[40px] h-[40px] hover:w-[38px] hover:h-[38px] flex items-center">
           <div className="grow text-center">
             <ArrowDown />
           </div>
