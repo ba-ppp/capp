@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as UploadSvg } from "asset/icons/upload.svg";
-import { UppyUploadModal } from "components/UploadModal/UploadModal";
 import { useDispatch } from "react-redux";
 import { toggleShowUploadModal } from "app/slices/toggleSlice";
 import { getUserId } from "utils/utils";
 import { Client, Message } from "paho-mqtt";
+import { SearchBar } from "./SearchBar";
+import { modifyThumbnailItem } from "app/slices/library.slice";
+
 
 export function NavBarMenu() {
   const dispatch = useDispatch();
@@ -31,7 +33,8 @@ export function NavBarMenu() {
 
     // called when a message arrives
     const onMessageArrived = (message: Message) => {
-      console.log("onMessageArrived:" + message.payloadString);
+      const data = JSON.parse(message.payloadString);
+      dispatch(modifyThumbnailItem(data));
     };
     // set callback handlers
     client.onConnectionLost = onConnectionLost;
@@ -41,14 +44,18 @@ export function NavBarMenu() {
     client.connect({ onSuccess: onConnect });
 
     // called when the client connects
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <div className="bg-bg-200 h-[5rem] shadow-nav flex px-2">
-        <div className="w-full flex justify-end items-center">
+        <div className="w-full flex items-center justify-between">
+          <div className="w-[10%]" />
+         
+         <SearchBar />
           <button
-            className="border border-purple-200 p-3 flex items-center bg-purple-500 rounded-md text-white space-x-2"
+            className="cursor-pointer justify-self-end border border-purple-200 p-3 flex items-center bg-purple-500 rounded-md text-white space-x-2"
             onClick={handleUpload}
           >
             <UploadSvg fill="#fff" />

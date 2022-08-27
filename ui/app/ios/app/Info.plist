@@ -12,7 +12,7 @@
 
     <key>NSPhotoLibraryAddUsageDescription</key>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<!-- <string>en</string> -->
 	<key>CFBundleDisplayName</key>
 	<string>app</string>
 	<key>CFBundleExecutable</key>
