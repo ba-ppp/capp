@@ -2,9 +2,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { ReactComponent as ArrowDown } from "asset/icons/arrow_drop_down.svg";
+import { ReactComponent as Voice } from "asset/icons/text_to_speech.svg";
 import DefaultImage from "asset/images/default.png";
 import { IThumbnailItem } from "types/utils.types";
 import { getStatusText, isErrorItem } from "utils/utils";
+import { useState } from "react";
 
 type Props = {
   item: IThumbnailItem;
@@ -12,10 +14,29 @@ type Props = {
 
 export const ThumbnailItem = (props: Props) => {
   const { item } = props;
+
   const { caption, imageURL, statusCode, uploadedAt, updatedAt } = item;
 
+  const [isHovering, toggleHovering] = useState(false);
+
+  const handleHover = () => {
+    toggleHovering(!isHovering);
+  };
+
+  const handleClickVoice = () => {
+    let speakText = new SpeechSynthesisUtterance(caption);
+    let voices = window.speechSynthesis.getVoices();
+    speakText.voice = voices?.[1];
+    window.speechSynthesis.speak(speakText);
+};
+
   return (
-    <Card sx={{ minWidth: 224 }} className="shadow-none mx-auto relative">
+    <Card
+      onMouseEnter={handleHover}
+      onMouseLeave={handleHover}
+      sx={{ minWidth: 224 }}
+      className="shadow-none mx-auto relative"
+    >
       <div
         className="w-full h-[10rem] bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${imageURL ?? DefaultImage})` }}
@@ -43,6 +64,13 @@ export const ThumbnailItem = (props: Props) => {
             <ArrowDown />
           </div>
         </div>
+        {isHovering && (
+          <div onClick={handleClickVoice} className="border_blue cursor-pointer absolute bottom-0 right-0 w-[40px] h-[40px] hover:w-[38px] hover:h-[38px] flex items-center">
+            <div className="grow text-center">
+              <Voice />
+            </div>
+          </div>
+        )}
       </CardContent>
       <div className="flex justify-between text-gray-400 text-[12px]">
         <span>{uploadedAt}</span>
