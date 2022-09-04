@@ -1,6 +1,7 @@
+import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet/lib/typescript/constants';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import LanguageModal from '../../components/LanguageModal';
 import HomeScreen from './HomeScreen';
 
@@ -9,7 +10,6 @@ const Tab = createBottomTabNavigator();
 const EmptyScreenComponent = () => {
   return <View />;
 };
-
 const CameraButton = ({ navigation }) => {
   const styles = StyleSheet.create({
     icon: {
@@ -33,9 +33,11 @@ const CameraButton = ({ navigation }) => {
 };
 
 const HomeNavigator = ({ navigation }) => {
+  const windowHeight = Dimensions.get('window').height;
+  const windowWidth = Dimensions.get('window').width;
   const styles = StyleSheet.create({
     tabBar: {
-      height: 40,
+      height: windowHeight/10,
       paddingHorizontal: 40,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
