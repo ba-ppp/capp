@@ -3,4 +3,5 @@ export const color = {
   white: '#FFFFFF',
   black: '#000000',
   antiFlashWhite: '#F1F2F6',
+  red: '#FF0000',
 };
