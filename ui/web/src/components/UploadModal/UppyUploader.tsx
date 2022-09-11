@@ -7,7 +7,7 @@ import XHRUpload from "@uppy/xhr-upload";
 import { uploadCustomStyles } from "./uppy.twin";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
-import { createAndSaveUserId } from "utils/utils";
+import {  getUserId } from "utils/utils";
 import { useDispatch } from "react-redux";
 import { addThumbnailItem } from "app/slices/library.slice";
 
@@ -23,7 +23,7 @@ const uppyOptions: UppyOptions = {
 };
 
 export const UppyUploader = () => {
-  const userId = createAndSaveUserId();
+  const userId = getUserId();
 
   const dispatch = useDispatch();
 
