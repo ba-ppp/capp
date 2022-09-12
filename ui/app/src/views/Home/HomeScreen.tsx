@@ -1,5 +1,6 @@
 import React, { useState, createRef, useRef, useEffect } from 'react';
 import { Client, Message } from 'react-native-paho-mqtt';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import {
   Dimensions,
   Pressable,
@@ -11,9 +12,9 @@ import {
   Image,
   Alert,
   Button,
-  Clipboard,
   ImageBackground,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { color, USER_ID, SERVER_URL } from '../../constants/constants';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
@@ -27,6 +28,7 @@ import {
   ImageType,
 } from '../../redux/imageSlice';
 import Tts from 'react-native-tts';
+import Clipboard from '@react-native-clipboard/clipboard';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -34,7 +36,10 @@ interface selectedImageType {
   item?: ImageType;
   index?: Number;
 }
-
+const styleDot = {
+  backgroundColor: '#000000',
+  marginRight: 3,
+};
 const HomeScreen = () => {
   const images = useSelector((state: RootState) => state.images);
   const [selectedImage, setSelectedImage] = useState<selectedImageType>({});
@@ -74,6 +79,7 @@ const HomeScreen = () => {
     });
     client.on('messageReceived', (message: any) => {
       const data = JSON.parse(message.payloadString);
+      console.log(data);
       store.dispatch(addCaption({ caption: data.caption, server_id: data.id }));
     });
     // connect the client
@@ -110,7 +116,7 @@ const HomeScreen = () => {
         />
         <View style={styles.imageItemFooter}>
           <Text numberOfLines={1} style={styles.caption}>
-            {item?.caption}
+            {item.caption || 'Loading ...'}
           </Text>
         </View>
       </View>
@@ -153,28 +159,26 @@ const HomeScreen = () => {
         <View>
           <Text style={styles.captionInfo}>{selectedImage.item?.caption}</Text>
           <View style={[styles.buttonMenu, { borderBottomWidth: 1 }]}>
-            <Pressable
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 Tts.speak(selectedImage.item?.caption as string);
               }}>
               <Text style={styles.buttonText}>Volume</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={[styles.buttonMenu, { borderBottomWidth: 1 }]}>
-            <Pressable
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                Clipboard.setString(
-                  (selectedImage.item?.caption as String) && '',
-                );
+                Clipboard.setString(selectedImage.item?.caption as string);
                 actionSheetRef.current?.hide(null);
               }}>
               <Text style={styles.buttonText}>Copy</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <View style={[styles.buttonMenu, { borderBottomWidth: 1 }]}>
-            <Pressable
+            <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 store.dispatch(deleteImage(selectedImage.index));
@@ -183,7 +187,7 @@ const HomeScreen = () => {
               <Text style={[styles.buttonText, styles.clearAllText]}>
                 Delete
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
       </ActionSheet>

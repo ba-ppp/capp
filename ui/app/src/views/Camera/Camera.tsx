@@ -17,13 +17,13 @@ const MyCamera = ({ navigation }) => {
       width: 30,
     },
     button: {
-      height: 50,
-      width: 50,
+      height: 70,
+      width: 70,
       backgroundColor: color.white,
       borderRadius: 100,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 10,
+      marginBottom: 20,
     },
     container: {
       backgroundColor: 'red',

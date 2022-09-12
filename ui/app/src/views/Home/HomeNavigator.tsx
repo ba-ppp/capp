@@ -1,6 +1,6 @@
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet/lib/typescript/constants';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ActivityIndicator,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import LanguageModal from '../../components/LanguageModal';
 import { color } from '../../constants/constants';
 import { addImage } from '../../redux/imageSlice';
-import { store } from '../../redux/store';
+import { RootState, store } from '../../redux/store';
 import { openLibrary } from '../../utils';
 import HomeScreen from './HomeScreen';
 
@@ -55,6 +57,7 @@ const windowWidth = Dimensions.get('window').width;
 const HomeNavigator = ({ navigation }) => {
   const homeIcon = require('../../../assets/home_icon.png');
   const cameraIcon = require('../../../assets/camera_icon.png');
+  const waiting = useSelector((state: RootState) => state.waiting);
   const screenOptions = ({ route }) => ({
     tabBarStyle: styles.tabBar,
     tabBarIcon: () => {
@@ -82,27 +85,48 @@ const HomeNavigator = ({ navigation }) => {
     tabBarShowLabel: false,
   });
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
-      <Tab.Screen
-        name="Language"
-        component={EmptyScreenComponent}
-        options={{
-          tabBarButton: () => <LanguageModal />,
-        }}
-      />
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen
-        name="Camera"
-        component={EmptyScreenComponent}
-        options={{
-          tabBarButton: () => <CameraButton navigation={navigation} />,
-        }}
-      />
-    </Tab.Navigator>
+    <>
+      {waiting > 0 && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator style={styles.loading} size={'large'} />
+        </View>
+      )}
+      <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+        <Tab.Screen
+          name="Language"
+          component={EmptyScreenComponent}
+          options={{
+            tabBarButton: () => <LanguageModal />,
+          }}
+        />
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen
+          name="Camera"
+          component={EmptyScreenComponent}
+          options={{
+            tabBarButton: () => <CameraButton navigation={navigation} />,
+          }}
+        />
+      </Tab.Navigator>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  loading: {
+    backgroundColor: color.antiFlashWhite,
+    width: 50,
+    height: 50,
+    borderRadius: 500,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    bottom: windowHeight / 10,
+    zIndex: 2,
+    width: windowWidth,
+    paddingBottom: 10,
+    alignItems: 'center',
+  },
   tabBar: {
     height: windowHeight / 10,
     paddingHorizontal: 40,

@@ -16,7 +16,9 @@ import StartScreen from './src/components/StartScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
-
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const Stack = createStackNavigator();
 
 const App = () => {

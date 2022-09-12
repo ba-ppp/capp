@@ -3,6 +3,7 @@ import { Asset, launchImageLibrary } from 'react-native-image-picker';
 import { SERVER_URL, USER_ID } from './constants/constants';
 import { addImage } from './redux/imageSlice';
 import { store } from './redux/store';
+import { decWaiting, incWaiting } from './redux/waitingSlice';
 
 const createFormData = (image: Asset) => {
   const data = new FormData();
@@ -18,6 +19,7 @@ const createFormData = (image: Asset) => {
 };
 
 const upload = (image: Asset) => {
+  store.dispatch(incWaiting());
   fetch(`http://${SERVER_URL}:8000/upload?user_id=${USER_ID}`, {
     method: 'POST',
     body: createFormData(image),
@@ -29,7 +31,8 @@ const upload = (image: Asset) => {
     })
     .catch(error => {
       console.log('error', error);
-    });
+    })
+    .finally(() => store.dispatch(decWaiting()));
 };
 
 export const openLibrary = () => {
