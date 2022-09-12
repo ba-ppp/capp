@@ -5,3 +5,5 @@ export const color = {
   antiFlashWhite: '#F1F2F6',
   red: '#FF0000',
 };
+export const USER_ID = '1234';
+export const SERVER_URL = '192.168.1.9';

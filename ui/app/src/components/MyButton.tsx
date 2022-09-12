@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { color } from '../constants/color';
+import { color } from '../constants/constants';
 
 interface Props {
   children: any;

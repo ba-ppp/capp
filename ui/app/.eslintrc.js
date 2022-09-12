@@ -14,8 +14,10 @@ module.exports = {
           'error',
           {
             endOfLine: 'auto',
-          }
+          },
         ],
+        '@typescript-eslint/no-unused-vars': 'off',
+        'react-hooks/exhaustive-deps': 'warn',
       },
     },
   ],

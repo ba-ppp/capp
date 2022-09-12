@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
-import { color } from '../../constants/color';
+import { color } from '../../constants/constants';
 
 const MyCamera = ({ navigation }) => {
   const styles = StyleSheet.create({

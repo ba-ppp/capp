@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { color } from '../constants/color';
+import { color } from '../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LanguageModal = () => {
@@ -49,6 +49,7 @@ const LanguageModal = () => {
     } catch (e) {
       // saving error
     }
+    getLanguage();
   }
 
   const setVietnamese = () => {
@@ -81,7 +82,8 @@ const LanguageModal = () => {
   return (
     <>
       <View style={styles.tabButton}>
-        <TouchableOpacity onPress={openModal}>
+        <TouchableOpacity
+          onPress={() => handleChooseLanguage(language === 'vi' ? 'en' : 'vi')}>
           <Image source={languageIcon} style={styles.icon} />
         </TouchableOpacity>
       </View>

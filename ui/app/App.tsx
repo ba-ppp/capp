@@ -14,6 +14,8 @@ import HomeNavigator from './src/views/Home/HomeNavigator';
 import MyCamera from './src/views/Camera/Camera';
 import StartScreen from './src/components/StartScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +28,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <Provider store={store}>
       {displayStartScreen && <StartScreen />}
       <NavigationContainer>
         <Stack.Navigator
@@ -37,7 +39,7 @@ const App = () => {
           <Stack.Screen name="Camera" component={MyCamera} />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 };
 
