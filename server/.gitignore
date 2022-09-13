@@ -1,4 +1,5 @@
 __pycache__/
-./static
+static
 *.py[cod]
 *$py.class
+.DS_Store
