@@ -1,6 +1,5 @@
 import React, { useState, createRef, useRef, useEffect } from 'react';
 import { Client, Message } from 'react-native-paho-mqtt';
-import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import {
   Dimensions,
   Pressable,
