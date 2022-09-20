@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   image: {
     width: windowWidth / 2.3,
     height: windowWidth / 2.3,
-    resizeMode: 'stretch',
+    // resizeMode: 'stretch',
     borderRadius: 10,
   },
   imageItemFooter: {
