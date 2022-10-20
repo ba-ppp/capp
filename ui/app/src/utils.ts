@@ -13,8 +13,8 @@ const createFormData = (image: Asset) => {
     uri: Platform.OS === 'ios' ? image.uri?.replace('file://', '') : image.uri,
   });
   data.append('relativePath', null);
-  data.append('name', image.fileName);
-  data.append('type', image.type);
+  // data.append('name', image.fileName);
+  // data.append('type', image.type);
   return data;
 };
 

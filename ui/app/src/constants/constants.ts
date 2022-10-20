@@ -4,6 +4,8 @@ export const color = {
   black: '#000000',
   antiFlashWhite: '#F1F2F6',
   red: '#FF0000',
+  gray: '#696969',
 };
 export const USER_ID = '1234';
-export const SERVER_URL = '192.168.1.9';
+export const USER_ID_CAMERA = '12345';
+export const SERVER_URL = '192.168.1.7';

@@ -78,7 +78,6 @@ const HomeScreen = () => {
     });
     client.on('messageReceived', (message: any) => {
       const data = JSON.parse(message.payloadString);
-      console.log(data);
       store.dispatch(addCaption({ caption: data.caption, server_id: data.id }));
     });
     // connect the client
@@ -106,7 +105,7 @@ const HomeScreen = () => {
       }}>
       <View key={item.uri} style={styles.imageItemContainer}>
         <ImageBackground
-          resizeMode="contain"
+          resizeMode="cover"
           source={{
             uri: item.uri,
           }}

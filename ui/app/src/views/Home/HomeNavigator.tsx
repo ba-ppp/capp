@@ -9,6 +9,13 @@ import {
   View,
   Text,
   ActivityIndicator,
+  Pressable,
+  Modal,
+  TextInput,
+  ScrollView,
+  Button,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import LanguageModal from '../../components/LanguageModal';
@@ -54,10 +61,16 @@ const CameraButton = ({ navigation }) => {
 };
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
+
 const HomeNavigator = ({ navigation }) => {
   const homeIcon = require('../../../assets/home_icon.png');
   const cameraIcon = require('../../../assets/camera_icon.png');
+  const searchIcon = require('../../../assets/search.png');
   const waiting = useSelector((state: RootState) => state.waiting);
+  const globalImages = useSelector((state: RootState) => state.images);
+  const [images, setImages] = useState(globalImages);
+  const [showModal, setShowModal] = useState(false);
+  const [searchText, setSearchText] = useState('');
   const screenOptions = ({ route }) => ({
     tabBarStyle: styles.tabBar,
     tabBarIcon: () => {
@@ -84,6 +97,16 @@ const HomeNavigator = ({ navigation }) => {
     headerShown: false,
     tabBarShowLabel: false,
   });
+  //catch global
+  useEffect(() => {
+    setImages(globalImages);
+    setSearchText('');
+  }, [globalImages]);
+
+  // handle search
+  const handleSearch = () => {
+
+  };
   return (
     <>
       {waiting > 0 && (
@@ -91,6 +114,33 @@ const HomeNavigator = ({ navigation }) => {
           <ActivityIndicator style={styles.loading} size={'large'} />
         </View>
       )}
+      {/* Search button */}
+      {images.length > 0 && !waiting && (
+        <TouchableOpacity
+          style={styles.searchBtn}
+          onPress={() => setShowModal(true)}>
+          <Image source={searchIcon} style={styles.searchIcon} />
+        </TouchableOpacity>
+      )}
+      <Modal transparent={true} visible={showModal}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={[styles.modalCenter]}>
+          <Pressable
+            onPress={() => setShowModal(false)}
+            style={styles.modalScreen}
+          />
+          <View style={styles.modal}>
+            <TextInput
+              onChangeText={setSearchText}
+              placeholder="Search images"
+              value={searchText}
+            />
+            <Button onPress={handleSearch} title="search" />
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+      {/* Tab navigator */}
       <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
         <Tab.Screen
           name="Language"
@@ -113,6 +163,12 @@ const HomeNavigator = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  modalCenter: {
+    zIndex: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: windowHeight,
+  },
   loading: {
     backgroundColor: color.antiFlashWhite,
     width: 50,
@@ -126,6 +182,15 @@ const styles = StyleSheet.create({
     width: windowWidth,
     paddingBottom: 10,
     alignItems: 'center',
+  },
+  modalScreen: {
+    height: windowHeight,
+    width: windowWidth,
+    backgroundColor: color.black,
+    position: 'absolute',
+    opacity: 0.5,
+    top: 0,
+    left: 0,
   },
   tabBar: {
     height: windowHeight / 10,
@@ -146,6 +211,28 @@ const styles = StyleSheet.create({
     fontSize: windowHeight / 10 - 40 + 5,
     textAlign: 'center',
     justifyContent: 'center',
+  },
+  modal: {
+    height: 50,
+    width: windowWidth,
+    backgroundColor: color.white,
+    zIndex: 10,
+  },
+  searchBtn: {
+    backgroundColor: color.white,
+    height: 60,
+    width: 60,
+    position: 'absolute',
+    right: 30,
+    bottom: windowHeight / 10 + 50,
+    zIndex: 5,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchIcon: {
+    height: 60,
+    width: 60,
   },
 });
 
