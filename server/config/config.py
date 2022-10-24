@@ -14,8 +14,8 @@ socket_config = {
 }
 
 s3_config = {
-    "endpoint": "play.min.io",
+    "endpoint": "localhost:9000",
     "access_key": "capp_cloud",
-    "secret_key": "Ii4*4LCr6ZFxntSsaXn2ki$prST9FW!idWq&pBZe",
+    "secret_key": "Abcd@1234",
     "bucket_name": "capp-cloud-uploads"
 }
