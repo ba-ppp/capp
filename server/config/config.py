@@ -17,5 +17,6 @@ s3_config = {
     "endpoint": "localhost:9000",
     "access_key": "capp_cloud",
     "secret_key": "Abcd@1234",
-    "bucket_name": "capp-cloud-uploads"
+    "bucket_name": "capp-cloud-uploads",
+    "bucket_export_name": "capp-cloud-exports",
 }
