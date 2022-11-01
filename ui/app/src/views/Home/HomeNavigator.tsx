@@ -1,4 +1,3 @@
-import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet/lib/typescript/constants';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useState } from 'react';
 import {
@@ -105,7 +104,8 @@ const HomeNavigator = ({ navigation }) => {
 
   // handle search
   const handleSearch = () => {
-
+    navigation.push('Search', { searchText: searchText });
+    setShowModal(false);
   };
   return (
     <>
@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: 'center',
   },
+  
   modalScreen: {
     height: windowHeight,
     width: windowWidth,

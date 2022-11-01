@@ -7,9 +7,9 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   Camera,
   PhotoFile,
@@ -32,7 +32,7 @@ const MyCamera = ({ navigation }) => {
       setPathState('');
       setCaption('');
       actionSheetRef.current?.hide(null);
-    }, 1000);
+    }, 500);
   });
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const cameraIcon = require('../../../assets/camera_icon.png');

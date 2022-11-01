@@ -8,4 +8,4 @@ export const color = {
 };
 export const USER_ID = '1234';
 export const USER_ID_CAMERA = '12345';
-export const SERVER_URL = '192.168.1.7';
+export const SERVER_URL = '192.168.1.6';

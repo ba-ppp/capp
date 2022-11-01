@@ -17,6 +17,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import { LogBox } from 'react-native';
+import SearchScreen from './src/views/Search/SearchScreen';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 const Stack = createStackNavigator();
@@ -39,6 +40,7 @@ const App = () => {
           }}>
           <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
           <Stack.Screen name="Camera" component={MyCamera} />
+          <Stack.Screen name="Search" component={SearchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
