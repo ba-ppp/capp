@@ -2,32 +2,17 @@ import React, { useState, createRef, useRef, useEffect } from 'react';
 import { Client, Message } from 'react-native-paho-mqtt';
 import {
   Dimensions,
-  Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Image,
-  Alert,
-  Button,
-  ImageBackground,
-  FlatList,
-  ActivityIndicator,
 } from 'react-native';
 import { color, USER_ID, SERVER_URL } from '../../constants/constants';
-import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { RootState, store } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { openLibrary } from '../../utils';
-import {
-  addCaption,
-  clearImage,
-  deleteImage,
-  ImageType,
-} from '../../redux/imageSlice';
-import Tts from 'react-native-tts';
-import Clipboard from '@react-native-clipboard/clipboard';
+import { addCaption, clearImage } from '../../redux/imageSlice';
 import ImageList from '../../components/ImageList';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
