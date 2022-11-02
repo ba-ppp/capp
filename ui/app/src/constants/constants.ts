@@ -5,6 +5,7 @@ export const color = {
   antiFlashWhite: '#F1F2F6',
   red: '#FF0000',
   gray: '#696969',
+  roundBtn: '#d3eaf2', 
 };
 export const USER_ID = '1234';
 export const USER_ID_CAMERA = '12345';

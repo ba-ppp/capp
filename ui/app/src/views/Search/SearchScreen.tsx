@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import ImageList from '../../components/ImageList';
+import RoundButton from '../../components/RoundButton';
 
 const SearchScreen = ({ route, navigation }) => {
   // state & variable
@@ -11,13 +12,21 @@ const SearchScreen = ({ route, navigation }) => {
   images = images.filter(item =>
     item.caption?.toUpperCase().includes(searchText.toUpperCase()),
   );
+  const goBackIcon = require('../../../assets/back.png');
   return (
-    <View>
-      <Text>{`There are ${images.length} ${
+    <View style={{ height: '100%' }}>
+      <Text style={{ fontSize: 20, textAlign: 'center' }}>{`There are ${
+        images.length
+      } ${
         images.length === 1 ? 'result' : 'results'
       } for: ${searchText}`}</Text>
       <ImageList images={images} />
-      <Button title="Go back" onPress={() => navigation.pop()} />
+      <RoundButton
+        icon={goBackIcon}
+        callback={() => navigation.pop()}
+        position={{ bottom: 5, left: 5 }}
+        iconSize={40}
+      />
     </View>
   );
 };

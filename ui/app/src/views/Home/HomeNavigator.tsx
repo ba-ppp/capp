@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import LanguageModal from '../../components/LanguageModal';
+import RoundButton from '../../components/RoundButton';
 import { color } from '../../constants/constants';
 import { addImage } from '../../redux/imageSlice';
 import { RootState, store } from '../../redux/store';
@@ -49,7 +50,7 @@ const CameraButton = ({ navigation }) => {
   });
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.push('Camera')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Camera')}>
         <Image
           source={require('../../../assets/camera_icon.png')}
           style={styles.icon}
@@ -62,13 +63,12 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 const HomeNavigator = ({ navigation }) => {
-  const homeIcon = require('../../../assets/home_icon.png');
   const cameraIcon = require('../../../assets/camera_icon.png');
   const searchIcon = require('../../../assets/search.png');
   const waiting = useSelector((state: RootState) => state.waiting);
   const globalImages = useSelector((state: RootState) => state.images);
   const [images, setImages] = useState(globalImages);
-  const [showModal, setShowModal] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
   const [searchText, setSearchText] = useState('');
   const screenOptions = ({ route }) => ({
     tabBarStyle: styles.tabBar,
@@ -104,9 +104,15 @@ const HomeNavigator = ({ navigation }) => {
 
   // handle search
   const handleSearch = () => {
+    if (!searchText) return;
     navigation.push('Search', { searchText: searchText });
-    setShowModal(false);
+    setIsShowModal(false);
   };
+  // show modal
+  const showModal = () => {
+    setIsShowModal(true);
+  };
+
   return (
     <>
       {waiting > 0 && (
@@ -116,18 +122,19 @@ const HomeNavigator = ({ navigation }) => {
       )}
       {/* Search button */}
       {images.length > 0 && !waiting && (
-        <TouchableOpacity
-          style={styles.searchBtn}
-          onPress={() => setShowModal(true)}>
-          <Image source={searchIcon} style={styles.searchIcon} />
-        </TouchableOpacity>
+        <RoundButton
+          icon={searchIcon}
+          callback={showModal}
+          position={{ right: 30 }}
+          iconSize={60}
+        />
       )}
-      <Modal transparent={true} visible={showModal}>
+      <Modal transparent={true} visible={isShowModal}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={[styles.modalCenter]}>
           <Pressable
-            onPress={() => setShowModal(false)}
+            onPress={() => setIsShowModal(false)}
             style={styles.modalScreen}
           />
           <View style={styles.modal}>
@@ -183,7 +190,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignItems: 'center',
   },
-  
   modalScreen: {
     height: windowHeight,
     width: windowWidth,
@@ -214,26 +220,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modal: {
-    height: 50,
-    width: windowWidth,
+    maxHeight: 50,
+    width: '95%',
     backgroundColor: color.white,
     zIndex: 10,
-  },
-  searchBtn: {
-    backgroundColor: color.white,
-    height: 60,
-    width: 60,
-    position: 'absolute',
-    right: 30,
-    bottom: windowHeight / 10 + 50,
-    zIndex: 5,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  searchIcon: {
-    height: 60,
-    width: 60,
   },
 });
 

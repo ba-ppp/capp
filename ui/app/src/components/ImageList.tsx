@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { ScrollView } from 'react-native-gesture-handler';
 import Tts from 'react-native-tts';
 import { color } from '../constants/constants';
 import { deleteImage, ImageType } from '../redux/imageSlice';
@@ -25,8 +26,8 @@ interface selectedImageType {
 const ImageList = ({ images }: { images: ImageType }) => {
   // style
   const styles = StyleSheet.create({
-    imageList: {
-      marginBottom: windowHeight / 10,
+    bottomSpace: {
+      minHeight: windowHeight / 10,
     },
     actionSheet: {
       borderTopLeftRadius: 10,
@@ -117,13 +118,9 @@ const ImageList = ({ images }: { images: ImageType }) => {
   );
   //render
   return (
-    <>
-      <FlatList
-        style={styles.imageList}
-        data={images}
-        renderItem={imageItem}
-        numColumns={2}
-      />
+    <ScrollView>
+      <FlatList data={images} renderItem={imageItem} numColumns={2} />
+      <View style={styles.bottomSpace} />
       {/* Action sheet */}
       <ActionSheet
         ref={actionSheetRef}
@@ -168,7 +165,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
           </View>
         </View>
       </ActionSheet>
-    </>
+    </ScrollView>
   );
 };
 
