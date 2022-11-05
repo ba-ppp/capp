@@ -1,20 +1,19 @@
 import json
-import sys
 from uuid import uuid4
-from fastapi import File, Form, UploadFile, FastAPI, BackgroundTasks
-from pydantic import BaseModel
+from fastapi import UploadFile, FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from system.process_files import *
 from system.socket import *
 from system.generate_captions import *
 from config.config import path_config
 from minio import Minio
-from minio.error import S3Error
-import os
 from datetime import datetime
+from googletrans import Translator
 from gtts import gTTS
 
 app = FastAPI()
+translator = Translator()
+
 origins = [
     "*",
     "http://localhost:8080",
@@ -119,11 +118,14 @@ def start_socket(user_id: str, file_name: str, minio_client):
     caption = generate_caption(user_id, file_name)
 
     imageURL = minio_client.presigned_get_object(bucket_name, file_name)
+    translation = translator.translate(caption, dest="vi")
+
 
     result = {
         'id': file_id,
         'statusCode': 0,
         'caption': caption,
+        'captionVietnamese': translation.text,
         'updatedAt': datetime.now().strftime("%d %b %y  %H:%M:%S"),
         'imageURL': imageURL
     }

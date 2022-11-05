@@ -10,3 +10,4 @@ fastapi
 python-multipart
 paho-mqtt
 minio
+googletrans==3.1.0a0

@@ -17,3 +17,8 @@ export enum ThumbnailStatusCode {
     UPLOADING = 2,
     ERROR = 3,
 }
+
+export enum Language {
+    ENGLISH = 'en',
+    VIETNAM = 'vi',
+}

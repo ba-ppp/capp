@@ -1,12 +1,13 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { ReactComponent as Export } from "asset/icons/export.svg";
-import { ReactComponent as Voice } from "asset/icons/text_to_speech.svg";
 import DefaultImage from "asset/images/default.png";
 import { IThumbnailItem } from "types/utils.types";
 import { getStatusText, getUserId, isErrorItem } from "utils/utils";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "app/store/store";
+import { Language } from "enums/enums";
 import axios from "axios";
 import { IconButton } from "@mui/material";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
@@ -19,9 +20,13 @@ type Props = {
 export const ThumbnailItem = (props: Props) => {
   const { item } = props;
 
-  const { caption, imageURL, statusCode, uploadedAt, updatedAt } = item;
+  const { caption, captionVietnamese, imageURL, statusCode, uploadedAt, updatedAt } = item;
 
   const [isHovering, toggleHovering] = useState(false);
+
+  const {activeLanguage} = useSelector((state: RootState) => state.global);
+
+  const currentCaption = activeLanguage === Language.VIETNAM ? captionVietnamese : caption;
 
   const handleHover = () => {
     toggleHovering(!isHovering);
@@ -73,7 +78,7 @@ export const ThumbnailItem = (props: Props) => {
           variant="body2"
           color="text.secondary"
         >
-          {caption ?? "Generating caption..."}
+          {currentCaption ?? "Generating caption..."}
         </Typography>
         <IconButton
           onClick={handleClickVoice}
