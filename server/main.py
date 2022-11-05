@@ -9,6 +9,7 @@ from config.config import path_config
 from minio import Minio
 from datetime import datetime
 from googletrans import Translator
+from gtts import gTTS
 
 app = FastAPI()
 translator = Translator()
@@ -32,15 +33,16 @@ client = connect_socket(server_id)
 client.loop_start()
 
 # upload images
+minio_client = Minio(
+    endpoint=s3_config.get("endpoint"),
+    access_key=s3_config.get("access_key"),
+    secret_key=s3_config.get("secret_key"),
+    secure=False,
+)
+
 @app.post("/upload")
 async def uploads(user_id: str, file: UploadFile, background_tasks: BackgroundTasks):
     # Initialize minio client
-    minio_client = Minio(
-        endpoint=s3_config.get("endpoint"),
-        access_key=s3_config.get("access_key"),
-        secret_key=s3_config.get("secret_key"),
-        secure=False,
-    )
 
     # Upload file and create bucket
     file_id = str(uuid4())
@@ -61,6 +63,48 @@ async def uploads(user_id: str, file: UploadFile, background_tasks: BackgroundTa
 
     # print(file.content_type)
     return result
+
+class Item(BaseModel):
+    user_id: str
+    caption: str
+
+@app.post('/exports')
+async def exports(item: Item):
+    caption = item.caption
+    user_id = item.user_id
+
+    myobj = gTTS(text=caption, lang='en', slow=False)
+  
+    # Saving the converted audio in a mp3 file named
+    # welcome 
+    folder_location = f"{path_config['static_path']}{user_id}"
+    file_id = str(uuid4())
+    new_file_name = f"{file_id}.mp3"
+
+    file_location = f"{folder_location}/{new_file_name}"
+
+    os.makedirs(folder_location, exist_ok=True)
+    if not os.path.exists(file_location):
+        with open(file_location, 'w'): pass
+
+    myobj.save(file_location)
+
+    bucket_export_name = s3_config.get('bucket_export_name')
+
+    found = minio_client.bucket_exists(bucket_export_name)
+    if not found:
+        minio_client.make_bucket(bucket_export_name)
+
+    minio_client.fput_object(
+            bucket_name=bucket_export_name,
+            object_name=new_file_name,
+            file_path=file_location,
+            part_size=10 * 1024 * 1024,
+        )
+
+    presign_url = minio_client.presigned_get_object(bucket_export_name, new_file_name)
+
+    return presign_url
 
 
 # start generate captions

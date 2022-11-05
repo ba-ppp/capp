@@ -6,6 +6,7 @@ const globalSlice = createSlice({
   initialState: {
     userId: "" as string,
     activeLanguage: Language.ENGLISH,
+    searchTerm: "" as string,
   },
   reducers: {
     setUserId: (state, { payload }: PayloadAction<string>) => {
@@ -14,8 +15,12 @@ const globalSlice = createSlice({
     setActiveLanguage: (state, { payload }: PayloadAction<Language>) => {
       state.activeLanguage = payload;
     },
+    setSearchTerm: (state, { payload }: PayloadAction<string>) => {
+      state.searchTerm = payload;
+    },
   },
 });
-export const { setUserId, setActiveLanguage } = globalSlice.actions;
+export const { setUserId, setSearchTerm, setActiveLanguage } =
+  globalSlice.actions;
 
 export const globalReducer = globalSlice.reducer;

@@ -1,15 +1,17 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { ReactComponent as ArrowDown } from "asset/icons/arrow_drop_down.svg";
-import { ReactComponent as Voice } from "asset/icons/text_to_speech.svg";
 import DefaultImage from "asset/images/default.png";
 import { IThumbnailItem } from "types/utils.types";
-import { getStatusText, isErrorItem } from "utils/utils";
+import { getStatusText, getUserId, isErrorItem } from "utils/utils";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store/store";
 import { Language } from "enums/enums";
+import axios from "axios";
+import { IconButton } from "@mui/material";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 type Props = {
   item: IThumbnailItem;
@@ -30,12 +32,24 @@ export const ThumbnailItem = (props: Props) => {
     toggleHovering(!isHovering);
   };
 
+  const handleExport = async () => {
+    const payload = {
+      user_id: getUserId(),
+      caption,
+    };
+    const response = await axios.post("http://localhost:8000/exports", payload);
+
+    if (response.status === 200) {
+      window.open(response.data);
+    }
+  };
+
   const handleClickVoice = () => {
     let speakText = new SpeechSynthesisUtterance(caption);
     let voices = window.speechSynthesis.getVoices();
     speakText.voice = voices?.[1];
     window.speechSynthesis.speak(speakText);
-};
+  };
 
   return (
     <Card
@@ -60,23 +74,25 @@ export const ThumbnailItem = (props: Props) => {
       </div>
       <CardContent className="p-0 mt-2 min-h-[5rem] relative">
         <Typography
-          className="font-semibold text-[15px] leading-5 break-words max-w-[13rem]"
+          className="font-semibold text-[15px] leading-5 break-words max-w-[12rem]"
           variant="body2"
           color="text.secondary"
         >
           {currentCaption ?? "Generating caption..."}
         </Typography>
-        <div className="border_blue cursor-pointer absolute top-0 bottom-0 right-0 w-[40px] h-[40px] hover:w-[38px] hover:h-[38px] flex items-center">
-          <div className="grow text-center">
-            <ArrowDown />
-          </div>
-        </div>
+        <IconButton
+          onClick={handleClickVoice}
+          className="absolute top-0 bottom-0 right-0 w-[40px] h-[40px]"
+        >
+          <RecordVoiceOverIcon />
+        </IconButton>
         {isHovering && (
-          <div onClick={handleClickVoice} className="border_blue cursor-pointer absolute bottom-0 right-0 w-[40px] h-[40px] hover:w-[38px] hover:h-[38px] flex items-center">
-            <div className="grow text-center">
-              <Voice />
-            </div>
-          </div>
+          <IconButton
+            onClick={handleExport}
+            className="absolute bottom-0 right-0 w-[40px] h-[40px]"
+          >
+            <FileDownloadIcon />
+          </IconButton>
         )}
       </CardContent>
       <div className="flex justify-between text-gray-400 text-[12px]">
