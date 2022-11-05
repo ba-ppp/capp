@@ -7,6 +7,9 @@ import DefaultImage from "asset/images/default.png";
 import { IThumbnailItem } from "types/utils.types";
 import { getStatusText, isErrorItem } from "utils/utils";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "app/store/store";
+import { Language } from "enums/enums";
 
 type Props = {
   item: IThumbnailItem;
@@ -15,9 +18,13 @@ type Props = {
 export const ThumbnailItem = (props: Props) => {
   const { item } = props;
 
-  const { caption, imageURL, statusCode, uploadedAt, updatedAt } = item;
+  const { caption, captionVietnamese, imageURL, statusCode, uploadedAt, updatedAt } = item;
 
   const [isHovering, toggleHovering] = useState(false);
+
+  const {activeLanguage} = useSelector((state: RootState) => state.global);
+
+  const currentCaption = activeLanguage === Language.VIETNAM ? captionVietnamese : caption;
 
   const handleHover = () => {
     toggleHovering(!isHovering);
@@ -57,7 +64,7 @@ export const ThumbnailItem = (props: Props) => {
           variant="body2"
           color="text.secondary"
         >
-          {caption ?? "Generating caption..."}
+          {currentCaption ?? "Generating caption..."}
         </Typography>
         <div className="border_blue cursor-pointer absolute top-0 bottom-0 right-0 w-[40px] h-[40px] hover:w-[38px] hover:h-[38px] flex items-center">
           <div className="grow text-center">
