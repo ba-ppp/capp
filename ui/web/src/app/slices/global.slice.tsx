@@ -16,7 +16,7 @@ const globalSlice = createSlice({
       state.activeLanguage = payload;
     },
     setSearchTerm: (state, { payload }: PayloadAction<string>) => {
-      state.searchTerm = payload;
+      state.searchTerm = payload.trim().toLowerCase();
     },
   },
 });

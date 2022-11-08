@@ -6,6 +6,8 @@ export interface IThumbnailItem {
     captionVietnamese?: string;
     imageURL?: string;
     statusCode: ThumbnailStatusCode;
+    audioENLink?: string;
+    audioVILink?: string;
     uploadedAt?: string;
     updatedAt?: string;
     fileType?: string;
