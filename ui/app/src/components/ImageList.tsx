@@ -158,7 +158,9 @@ const ImageList = ({ images }: { images: ImageType }) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                Clipboard.setString(selectedImage.item?.caption as string);
+                Clipboard.setString(
+                  getDisplayCaption(selectedImage.item as ImageType),
+                );
                 actionSheetRef.current?.hide(null);
               }}>
               <Text style={styles.buttonText}>Copy</Text>
