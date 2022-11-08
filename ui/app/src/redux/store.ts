@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import imagesReducer from './imageSlice';
+import languageSlice from './languageSlice';
 import waitingReducer from './waitingSlice';
 export const store = configureStore({
-  reducer: { images: imagesReducer, waiting: waitingReducer },
+  reducer: {
+    images: imagesReducer,
+    waiting: waitingReducer,
+    language: languageSlice,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
