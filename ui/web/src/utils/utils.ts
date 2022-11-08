@@ -29,7 +29,6 @@ export const isErrorItem = (statusCode: ThumbnailStatusCode): boolean => {
     if (isNil(statusCode)) {
         return true;
     }
-    console.log(typeof ThumbnailStatusCode.ERROR);
     return statusCode === ThumbnailStatusCode.ERROR;
 }
 

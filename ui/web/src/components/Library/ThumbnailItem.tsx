@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import DefaultImage from "asset/images/default.png";
 import { IThumbnailItem } from "types/utils.types";
 import { getStatusText, getUserId, isErrorItem } from "utils/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store/store";
 import { Language } from "enums/enums";
@@ -12,6 +12,7 @@ import axios from "axios";
 import { IconButton } from "@mui/material";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { isNil } from "lodash";
 
 type Props = {
   item: IThumbnailItem;
@@ -20,36 +21,56 @@ type Props = {
 export const ThumbnailItem = (props: Props) => {
   const { item } = props;
 
-  const { caption, captionVietnamese, imageURL, statusCode, uploadedAt, updatedAt } = item;
+  const {
+    caption,
+    captionVietnamese,
+    imageURL,
+    statusCode,
+    uploadedAt,
+    updatedAt,
+  } = item;
 
   const [isHovering, toggleHovering] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-  const {activeLanguage} = useSelector((state: RootState) => state.global);
+  const { activeLanguage } = useSelector((state: RootState) => state.global);
 
-  const currentCaption = activeLanguage === Language.VIETNAM ? captionVietnamese : caption;
+  const currentCaption =
+    activeLanguage === Language.VIETNAM ? captionVietnamese : caption;
 
   const handleHover = () => {
     toggleHovering(!isHovering);
   };
 
   const handleExport = async () => {
-    const payload = {
-      user_id: getUserId(),
-      caption,
-    };
-    const response = await axios.post("http://localhost:8000/exports", payload);
-
-    if (response.status === 200) {
-      window.open(response.data);
+    if (activeLanguage === Language.VIETNAM) {
+      window.open(item.audioVILink);
+      return;
     }
+    window.open(item.audioENLink);
   };
 
   const handleClickVoice = () => {
-    let speakText = new SpeechSynthesisUtterance(caption);
-    let voices = window.speechSynthesis.getVoices();
-    speakText.voice = voices?.[1];
-    window.speechSynthesis.speak(speakText);
+    if (isNil(audio)) return;
+    audio.play();
   };
+
+  useEffect(() => {
+    if (isNil(audio)) {
+      if (activeLanguage === Language.VIETNAM) {
+        setAudio(new Audio(item.audioVILink));
+        return;
+      }
+      setAudio(new Audio(item.audioENLink));
+    } else {
+      if (isNil(item.audioVILink) || isNil(item.audioENLink)) return;
+      if (activeLanguage === Language.VIETNAM) {
+        audio.src = item.audioVILink;
+        return;
+      }
+      audio.src = item.audioENLink;
+    }
+  }, [activeLanguage, item.audioENLink, item.audioVILink]);
 
   return (
     <Card
