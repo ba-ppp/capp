@@ -26,7 +26,6 @@ const upload = (image: Asset) => {
   })
     .then(response => response.json())
     .then(response => {
-      console.log('response', response.id);
       store.dispatch(addImage({ ...image, server_id: response.id }));
     })
     .catch(error => {

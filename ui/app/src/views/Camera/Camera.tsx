@@ -18,15 +18,18 @@ import {
 import { color, SERVER_URL, USER_ID_CAMERA } from '../../constants/constants';
 import { Client, Message } from 'react-native-paho-mqtt';
 import Tts from 'react-native-tts';
-import { store } from '../../redux/store';
+import { RootState, store } from '../../redux/store';
 import { decWaiting, incWaiting } from '../../redux/waitingSlice';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { useSelector } from 'react-redux';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 const MyCamera = ({ navigation }) => {
   // state
   const [pathState, setPathState] = useState('');
   const [caption, setCaption] = useState('');
+  const language = useSelector((state: RootState) => state.language);
+  Tts.setDefaultLanguage(language === 'en' ? 'en-US' : 'vi-VN');
   Tts.addEventListener('tts-finish', event => {
     setTimeout(() => {
       setPathState('');
@@ -154,7 +157,7 @@ const MyCamera = ({ navigation }) => {
     });
     client.on('messageReceived', (message: any) => {
       const data = JSON.parse(message.payloadString);
-      setCaption(data.caption);
+      setCaption(language === 'en' ? data.caption : data.captionVietnamese);
     });
     // connect the client
     client

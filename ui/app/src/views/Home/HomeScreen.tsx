@@ -23,7 +23,6 @@ const styleDot = {
 };
 const HomeScreen = () => {
   const images = useSelector((state: RootState) => state.images);
-  console.log(images);
   //Set up an in-memory alternative to global localStorage
   const myStorage: any = {
     setItem: (key: string, item: any) => {
