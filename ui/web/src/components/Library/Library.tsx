@@ -6,16 +6,23 @@ import { UppyUploadModal } from "components/UploadModal/UploadModal";
 import { ThumbnailItem } from "./ThumbnailItem";
 import { isEmpty } from "lodash";
 import { EmptyLibrary } from "components/EmptyLibrary/EmptyLibrary";
+import { Language } from "enums/enums";
 
 export const Library = () => {
   const toggle = useSelector((state: RootState) => state.toggle);
   const library = useSelector((state: RootState) => state.library);
+  const global = useSelector((state: RootState) => state.global);
   const searchTerm = useSelector((state: RootState) => state.global.searchTerm);
 
   const filteredLibrary = library.items.filter((item) => {
-    if (item.caption) return item?.caption?.includes(searchTerm);
+    if (item.caption && item.captionVietnamese) {
+      if (global.activeLanguage === Language.ENGLISH)
+        return item?.caption?.toLowerCase().includes(searchTerm);
+      return item?.captionVietnamese?.includes(searchTerm);
+    }
     return item;
   });
+
   const uploadRef = useRef<any>(null);
 
   useEffect(() => {

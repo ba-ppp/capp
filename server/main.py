@@ -65,49 +65,6 @@ async def uploads(user_id: str, file: UploadFile, background_tasks: BackgroundTa
     # print(file.content_type)
     return result
 
-class Item(BaseModel):
-    user_id: str
-    caption: str
-
-@app.post('/exports')
-async def exports(item: Item):
-    caption = item.caption
-    user_id = item.user_id
-
-    myobj = gTTS(text=caption, lang='en', slow=False)
-  
-    # Saving the converted audio in a mp3 file named
-    # welcome 
-    folder_location = f"{path_config['static_path']}{user_id}"
-    file_id = str(uuid4())
-    new_file_name = f"{file_id}.mp3"
-
-    file_location = f"{folder_location}/{new_file_name}"
-
-    os.makedirs(folder_location, exist_ok=True)
-    if not os.path.exists(file_location):
-        with open(file_location, 'w'): pass
-
-    myobj.save(file_location)
-
-    bucket_export_name = s3_config.get('bucket_export_name')
-
-    found = minio_client.bucket_exists(bucket_export_name)
-    if not found:
-        minio_client.make_bucket(bucket_export_name)
-
-    minio_client.fput_object(
-            bucket_name=bucket_export_name,
-            object_name=new_file_name,
-            file_path=file_location,
-            part_size=10 * 1024 * 1024,
-        )
-
-    presign_url = minio_client.presigned_get_object(bucket_export_name, new_file_name)
-
-    return presign_url
-
-
 # start generate captions
 def start_socket(user_id: str, file_name: str, minio_client):
 
@@ -121,12 +78,18 @@ def start_socket(user_id: str, file_name: str, minio_client):
     imageURL = minio_client.presigned_get_object(bucket_name, file_name)
     translation = translator.translate(caption, dest="vi")
 
+    caption_vi = translation.text
+
+    audio_en_link = get_link_audio(caption, user_id, 'en', minio_client)
+    audio_vi_link = get_link_audio(caption_vi, user_id, 'vi', minio_client)
 
     result = {
         'id': file_id,
         'statusCode': 0,
         'caption': caption,
-        'captionVietnamese': translation.text,
+        'captionVietnamese': caption_vi,
+        'audioENLink': audio_en_link,
+        'audioVILink': audio_vi_link,
         'updatedAt': datetime.now().strftime("%d %b %y  %H:%M:%S"),
         'imageURL': imageURL
     }
