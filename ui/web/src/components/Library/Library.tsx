@@ -18,7 +18,7 @@ export const Library = () => {
     if (item.caption && item.captionVietnamese) {
       if (global.activeLanguage === Language.ENGLISH)
         return item?.caption?.toLowerCase().includes(searchTerm);
-      return item?.captionVietnamese?.includes(searchTerm);
+      return item?.captionVietnamese?.toLowerCase().includes(searchTerm);
     }
     return item;
   });
