@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 export interface ImageType extends Asset {
   server_id: String | undefined;
   caption: String | undefined;
+  vcaption: String | undefined;
 }
 
 const initialState: Array<ImageType> = [];
@@ -27,9 +28,11 @@ const imageSlice = createSlice({
     addCaption: (state, info) => {
       const caption = info.payload.caption;
       const server_id = info.payload.server_id;
+      const vcaption = info.payload.vcaption;
       const index = state.findIndex(item => item.server_id === server_id);
       if (index !== -1) {
         state[index].caption = caption;
+        state[index].vcaption = vcaption;
         return state;
       }
     },

@@ -3,10 +3,14 @@ import Modal from 'react-native-modal';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { color } from '../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setLanguage } from '../redux/languageSlice';
 
 const LanguageModal = () => {
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const [language, setLanguage] = useState('vi');
+  const language = useSelector((state: RootState) => state.language);
   const languageIcon =
     language === 'vi'
       ? require('../../assets/vietnam-icon.png')
@@ -42,14 +46,9 @@ const LanguageModal = () => {
   const vietnamImage = require('../../assets/vietnam.png');
   const ukImage = require('../../assets/uk.jpg');
 
-  async function handleChooseLanguage(value: string) {
+  function handleChooseLanguage(value: string) {
     setModalVisible(false);
-    try {
-      await AsyncStorage.setItem('language', value);
-    } catch (e) {
-      // saving error
-    }
-    getLanguage();
+    dispatch(setLanguage(value));
   }
 
   const setVietnamese = () => {
@@ -57,7 +56,7 @@ const LanguageModal = () => {
   };
 
   const setEnglish = () => {
-    handleChooseLanguage('eng');
+    handleChooseLanguage('en');
   };
 
   const closeModal = () => {
@@ -66,18 +65,6 @@ const LanguageModal = () => {
   const openModal = () => {
     setModalVisible(true);
   };
-
-  const getLanguage = async () => {
-    try {
-      const value = await AsyncStorage.getItem('language');
-      if (value !== null) {
-        setLanguage(value);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-  getLanguage();
 
   return (
     <>

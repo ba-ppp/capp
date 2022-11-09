@@ -9,9 +9,11 @@ const SearchScreen = ({ route, navigation }) => {
   // state & variable
   let images = useSelector((state: RootState) => state.images);
   const searchText: string = route.params.searchText;
-  images = images.filter(item =>
-    item.caption?.toUpperCase().includes(searchText.toUpperCase()),
-  );
+  const language = useSelector((state: RootState) => state.language);
+  images = images.filter(item => {
+    const caption = language === 'vi' ? item.vcaption : item.caption;
+    return caption?.toUpperCase().includes(searchText.toUpperCase());
+  });
   const goBackIcon = require('../../../assets/back.png');
   return (
     <View style={{ height: '100%' }}>

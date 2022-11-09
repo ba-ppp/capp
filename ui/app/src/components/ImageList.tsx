@@ -12,9 +12,10 @@ import {
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { ScrollView } from 'react-native-gesture-handler';
 import Tts from 'react-native-tts';
+import { useSelector } from 'react-redux';
 import { color } from '../constants/constants';
 import { deleteImage, ImageType } from '../redux/imageSlice';
-import { store } from '../redux/store';
+import { RootState, store } from '../redux/store';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -88,9 +89,14 @@ const ImageList = ({ images }: { images: ImageType }) => {
     },
   });
   //variable & state
+  const language = useSelector((state: RootState) => state.language);
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const [selectedImage, setSelectedImage] = useState<selectedImageType>({});
-  Tts.setDefaultLanguage('en-US');
+  Tts.setDefaultLanguage(language === 'en' ? 'en-US' : 'vi-VN');
+  //get display caption
+  const getDisplayCaption = (imageObj: ImageType) => {
+    return language === 'vi' ? imageObj?.vcaption : imageObj?.caption;
+  };
   //image item
   const imageItem = ({ item, index }: { item: ImageType; index: Number }) => (
     <TouchableOpacity
@@ -110,7 +116,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
         />
         <View style={styles.imageItemFooter}>
           <Text numberOfLines={1} style={styles.caption}>
-            {item.caption || 'Loading ...'}
+            {getDisplayCaption(item) || 'Loading ...'}
           </Text>
         </View>
       </View>
@@ -131,12 +137,19 @@ const ImageList = ({ images }: { images: ImageType }) => {
         containerStyle={styles.actionSheet}
         indicatorStyle={{ backgroundColor: 'black' }}>
         <View>
-          <Text style={styles.captionInfo}>{selectedImage.item?.caption}</Text>
+          <Text style={styles.captionInfo}>
+            {getDisplayCaption(selectedImage.item as ImageType)}
+          </Text>
           <View style={[styles.buttonMenu, { borderBottomWidth: 1 }]}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                Tts.speak(selectedImage.item?.caption as string);
+                if (!selectedImage) {
+                  return;
+                }
+                Tts.speak(
+                  getDisplayCaption(selectedImage.item as ImageType) as string,
+                );
               }}>
               <Text style={styles.buttonText}>Volume</Text>
             </TouchableOpacity>
@@ -145,7 +158,9 @@ const ImageList = ({ images }: { images: ImageType }) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                Clipboard.setString(selectedImage.item?.caption as string);
+                Clipboard.setString(
+                  getDisplayCaption(selectedImage.item as ImageType),
+                );
                 actionSheetRef.current?.hide(null);
               }}>
               <Text style={styles.buttonText}>Copy</Text>

@@ -57,7 +57,13 @@ const HomeScreen = () => {
     });
     client.on('messageReceived', (message: any) => {
       const data = JSON.parse(message.payloadString);
-      store.dispatch(addCaption({ caption: data.caption, server_id: data.id }));
+      store.dispatch(
+        addCaption({
+          caption: data.caption,
+          server_id: data.id,
+          vcaption: data.captionVietnamese,
+        }),
+      );
     });
     // connect the client
     client
