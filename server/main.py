@@ -10,7 +10,6 @@ from minio import Minio
 from datetime import datetime
 from googletrans import Translator
 from gtts import gTTS
-from pydantic import BaseModel
 
 app = FastAPI()
 translator = Translator()
