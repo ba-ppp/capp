@@ -19,7 +19,7 @@ import {
 import { useSelector } from 'react-redux';
 import LanguageModal from '../../components/LanguageModal';
 import RoundButton from '../../components/RoundButton';
-import { color } from '../../constants/constants';
+import { color, HEIGHT, WIDTH } from '../../constants/constants';
 import { addImage } from '../../redux/imageSlice';
 import { RootState, store } from '../../redux/store';
 import { openLibrary } from '../../utils';
@@ -41,8 +41,8 @@ const EmptyScreenComponent = ({ navigation }) => {
 const CameraButton = ({ navigation }) => {
   const styles = StyleSheet.create({
     icon: {
-      height: 30,
-      width: 30,
+      height: HEIGHT / 20,
+      width: HEIGHT / 20,
     },
     container: {
       justifyContent: 'center',
@@ -59,11 +59,9 @@ const CameraButton = ({ navigation }) => {
     </View>
   );
 };
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
 
 const HomeNavigator = ({ navigation }) => {
-  const cameraIcon = require('../../../assets/camera_icon.png');
+  const plusIcon = require('../../../assets/white-plus.png');
   const searchIcon = require('../../../assets/search.png');
   const waiting = useSelector((state: RootState) => state.waiting);
   const globalImages = useSelector((state: RootState) => state.images);
@@ -73,21 +71,13 @@ const HomeNavigator = ({ navigation }) => {
   const screenOptions = ({ route }) => ({
     tabBarStyle: styles.tabBar,
     tabBarIcon: () => {
-      let iconSize = 30;
       if (route.name === 'Home') {
         return (
           <TouchableOpacity onPress={openLibrary}>
             <View style={styles.addButton}>
-              <Text style={styles.plus}>+</Text>
+              <Image source={plusIcon} style={styles.icon} />
             </View>
           </TouchableOpacity>
-        );
-      } else if (route.name === 'Camera') {
-        return (
-          <Image
-            style={{ width: iconSize, height: iconSize }}
-            source={cameraIcon}
-          />
         );
       }
     },
@@ -126,7 +116,7 @@ const HomeNavigator = ({ navigation }) => {
           icon={searchIcon}
           callback={showModal}
           position={{ right: 30 }}
-          iconSize={60}
+          iconSize={HEIGHT / 15}
         />
       )}
       <Modal transparent={true} visible={isShowModal}>
@@ -174,7 +164,11 @@ const styles = StyleSheet.create({
     zIndex: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    height: windowHeight,
+    height: HEIGHT,
+  },
+  icon: {
+    height: HEIGHT / 20,
+    width: HEIGHT / 20,
   },
   loading: {
     backgroundColor: color.antiFlashWhite,
@@ -184,15 +178,15 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     position: 'absolute',
-    bottom: windowHeight / 10,
+    bottom: HEIGHT / 10,
     zIndex: 2,
-    width: windowWidth,
+    width: WIDTH,
     paddingBottom: 10,
     alignItems: 'center',
   },
   modalScreen: {
-    height: windowHeight,
-    width: windowWidth,
+    height: HEIGHT,
+    width: WIDTH,
     backgroundColor: color.black,
     position: 'absolute',
     opacity: 0.5,
@@ -200,7 +194,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   tabBar: {
-    height: windowHeight / 10,
+    height: HEIGHT / 10,
     paddingHorizontal: 40,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -208,14 +202,14 @@ const styles = StyleSheet.create({
   addButton: {
     borderRadius: 1000,
     backgroundColor: color.violetBlue,
-    height: 50,
-    width: 50,
+    height: HEIGHT / 15,
+    width: HEIGHT / 15,
     justifyContent: 'center',
-    // alignItems: 'center',
+    alignItems: 'center',
   },
   plus: {
     color: color.white,
-    fontSize: windowHeight / 10 - 40 + 5,
+    fontSize: HEIGHT / 10 - 40 + 5,
     textAlign: 'center',
     justifyContent: 'center',
   },

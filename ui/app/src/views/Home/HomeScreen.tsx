@@ -8,14 +8,12 @@ import {
   View,
   Image,
 } from 'react-native';
-import { color, USER_ID, SERVER_URL } from '../../constants/constants';
+import { color, USER_ID, SERVER_URL, WIDTH, HEIGHT } from '../../constants/constants';
 import { RootState, store } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { openLibrary } from '../../utils';
 import { addCaption, clearImage } from '../../redux/imageSlice';
 import ImageList from '../../components/ImageList';
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
 
 const styleDot = {
   backgroundColor: '#000000',
@@ -90,7 +88,7 @@ const HomeScreen = () => {
           />
         ) : (
           <TouchableOpacity onPress={() => store.dispatch(clearImage())}>
-            <Text style={styles.clearAllText}>Clear all</Text>
+            <Text style={styles.clearAllText}>Clear</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
   },
   header: {
     justifyContent: 'center',
-    height: windowHeight / 10,
+    height: HEIGHT / 10,
     alignItems: 'center',
     paddingBottom: 5,
     elevation: 1,
@@ -132,14 +130,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     zIndex: -1,
-    height: windowHeight,
-    width: windowWidth,
+    height: HEIGHT,
+    width: WIDTH,
   },
   plus: {
     fontSize: 60,
   },
   clearAllText: {
     color: color.red,
+    fontSize: HEIGHT / 50,
   },
 });
 
