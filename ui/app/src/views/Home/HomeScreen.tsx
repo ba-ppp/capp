@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   clearAllText: {
     color: color.red,
     fontSize: HEIGHT / 50,
+    marginTop: 20,
   },
 });
 

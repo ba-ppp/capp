@@ -367,7 +367,7 @@ PODS:
   - SocketRocket (0.6.0)
   - TextToSpeech (4.1.0):
     - React
-  - VisionCamera (2.14.1):
+  - VisionCamera (2.15.2):
     - React
     - React-callinvoker
     - React-Core
@@ -590,7 +590,7 @@ SPEC CHECKSUMS:
   RNScreens: ee31ecdf23fe81e93c74feaa086cf173d758ab58
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   TextToSpeech: b3aa777ff5585705f179c0a2436bfd0926d1716e
-  VisionCamera: 55a9d8c2544d0fd898c7d39eb30a195bb9f45999
+  VisionCamera: d011219ead7037dd6bd0c776ab20fa0874d95de0
   Yoga: 99652481fcd320aefa4a7ef90095b95acd181952
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
