@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import ImageList from '../../components/ImageList';
 import RoundButton from '../../components/RoundButton';
+import { HEIGHT } from '../../constants/constants';
+
 
 const SearchScreen = ({ route, navigation }) => {
   // state & variable
@@ -17,7 +19,7 @@ const SearchScreen = ({ route, navigation }) => {
   const goBackIcon = require('../../../assets/back.png');
   return (
     <View style={{ height: '100%' }}>
-      <Text style={{ fontSize: 20, textAlign: 'center' }}>{`There are ${
+      <Text style={{ fontSize: 20, textAlign: 'center' ,marginTop: HEIGHT / 20,}}>{`There are ${
         images.length
       } ${
         images.length === 1 ? 'result' : 'results'
@@ -27,7 +29,7 @@ const SearchScreen = ({ route, navigation }) => {
         icon={goBackIcon}
         callback={() => navigation.pop()}
         position={{ bottom: 5, left: 5 }}
-        iconSize={40}
+        iconSize={HEIGHT / 15}
       />
     </View>
   );

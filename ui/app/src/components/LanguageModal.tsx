@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { color } from '../constants/constants';
+import { color, HEIGHT } from '../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -17,8 +17,8 @@ const LanguageModal = () => {
       : require('../../assets/uk-icon.png');
   const styles = StyleSheet.create({
     icon: {
-      height: 30,
-      width: 30,
+      height: HEIGHT / 20,
+      width: HEIGHT / 20,
     },
     modal: {
       backgroundColor: 'none',

@@ -15,15 +15,19 @@ import {
   PhotoFile,
   useCameraDevices,
 } from 'react-native-vision-camera';
-import { color, SERVER_URL, USER_ID_CAMERA } from '../../constants/constants';
+import {
+  color,
+  HEIGHT,
+  SERVER_URL,
+  USER_ID_CAMERA,
+  WIDTH,
+} from '../../constants/constants';
 import { Client, Message } from 'react-native-paho-mqtt';
 import Tts from 'react-native-tts';
 import { RootState, store } from '../../redux/store';
 import { decWaiting, incWaiting } from '../../redux/waitingSlice';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { useSelector } from 'react-redux';
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
 const MyCamera = ({ navigation }) => {
   // state
   const [pathState, setPathState] = useState('');
@@ -81,9 +85,9 @@ const MyCamera = ({ navigation }) => {
     },
     loadingContainer: {
       position: 'absolute',
-      bottom: windowHeight / 10,
+      bottom: HEIGHT / 10,
       zIndex: 2,
-      width: windowWidth,
+      width: WIDTH,
       paddingBottom: 10,
       alignItems: 'center',
       display: caption === '' ? 'flex' : 'none',
@@ -211,7 +215,7 @@ const MyCamera = ({ navigation }) => {
         <>
           <Image
             source={{ uri: pathState }}
-            style={{ width: windowWidth, height: windowHeight }}
+            style={{ width: WIDTH, height: HEIGHT }}
           />
           <View style={styles.loadingContainer}>
             <ActivityIndicator style={styles.loading} size={'large'} />

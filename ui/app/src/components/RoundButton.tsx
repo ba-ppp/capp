@@ -1,18 +1,16 @@
 import React from 'react';
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { color } from '../constants/constants';
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
+import { color, HEIGHT } from '../constants/constants';
 
 const RoundButton = ({ icon, callback, position, iconSize }) => {
   //style
   const styles = StyleSheet.create({
     btn: {
       backgroundColor: color.roundBtn,
-      height: 60,
-      width: 60,
+      height: iconSize,
+      width: iconSize,
       position: 'absolute',
-      bottom: windowHeight / 10 + 50,
+      bottom: HEIGHT / 10 + 50,
       zIndex: 5,
       borderRadius: 100,
       alignItems: 'center',

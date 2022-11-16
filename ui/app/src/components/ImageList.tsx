@@ -8,16 +8,16 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActionSheetIOS,
+  Platform,
 } from 'react-native';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { ScrollView } from 'react-native-gesture-handler';
 import Tts from 'react-native-tts';
 import { useSelector } from 'react-redux';
-import { color } from '../constants/constants';
+import { color, HEIGHT, WIDTH } from '../constants/constants';
 import { deleteImage, ImageType } from '../redux/imageSlice';
 import { RootState, store } from '../redux/store';
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
 
 interface selectedImageType {
   item?: ImageType;
@@ -28,7 +28,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
   // style
   const styles = StyleSheet.create({
     bottomSpace: {
-      minHeight: windowHeight / 10,
+      minHeight: HEIGHT / 10,
     },
     actionSheet: {
       borderTopLeftRadius: 10,
@@ -51,8 +51,8 @@ const ImageList = ({ images }: { images: ImageType }) => {
       flexDirection: 'column',
     },
     image: {
-      width: windowWidth / 2.3,
-      height: windowWidth / 2.3,
+      width: WIDTH / 2.3,
+      height: WIDTH / 2.3,
       // resizeMode: 'stretch',
       borderRadius: 10,
     },
@@ -66,21 +66,21 @@ const ImageList = ({ images }: { images: ImageType }) => {
       marginRight: 10,
       alignItems: 'center',
       justifyContent: 'flex-end',
-      width: windowWidth / 2.3,
+      width: WIDTH / 2.3,
     },
     buttonText: {
       fontSize: 20,
       color: '#1E90FF',
     },
     imageItemFooter: {
-      width: windowWidth / 2.3,
+      width: WIDTH / 2.3,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-start',
     },
     caption: {
       fontSize: 16,
-      width: windowWidth / 2.3 - 10,
+      width: WIDTH / 2.3 - 10,
       textAlign: 'center',
       flexGrow: 1,
       marginLeft: 5,
@@ -89,6 +89,9 @@ const ImageList = ({ images }: { images: ImageType }) => {
     },
   });
   //variable & state
+  Tts.voices()
+    .then(voices => console.log(voices))
+    .catch(err => console.log('voice err'));
   const language = useSelector((state: RootState) => state.language);
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const [selectedImage, setSelectedImage] = useState<selectedImageType>({});
@@ -101,6 +104,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
   const imageItem = ({ item, index }: { item: ImageType; index: Number }) => (
     <TouchableOpacity
       key={item.uri}
+      // onPress={onPress}
       onPress={() => {
         actionSheetRef.current?.show();
         setSelectedImage({ item, index });
@@ -127,6 +131,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
     <ScrollView>
       <FlatList data={images} renderItem={imageItem} numColumns={2} />
       <View style={styles.bottomSpace} />
+      
       {/* Action sheet */}
       <ActionSheet
         ref={actionSheetRef}

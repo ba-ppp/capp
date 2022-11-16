@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 export const color = {
   violetBlue: '#646FD4',
   white: '#FFFFFF',
@@ -9,4 +11,6 @@ export const color = {
 };
 export const USER_ID = '1234';
 export const USER_ID_CAMERA = '12345';
-export const SERVER_URL = '192.168.1.7';
+export const SERVER_URL = '127.0.0.1';
+export const WIDTH = Dimensions.get('window').width;
+export const HEIGHT = Dimensions.get('window').height;
