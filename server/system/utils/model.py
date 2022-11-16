@@ -38,9 +38,9 @@ from keras.layers import Input, Dense, Dropout, LSTM, Embedding, concatenate, Re
 #     model.compile(loss='categorical_crossentropy', optimizer='adam')
 #     return model
 
-def CNNModel():
-	model = InceptionV3()
-
-	model.layers.pop()
-	model = Model(inputs=model.inputs, outputs=model.layers[-1].output)
+def CNNModel(lang='en'):
+	model = InceptionV3(include_top=False, pooling='avg')
+	if lang=='en':
+		model=InceptionV3()
+	# model.summary()
 	return model
