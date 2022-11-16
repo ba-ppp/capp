@@ -8,6 +8,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActionSheetIOS,
+  Platform,
 } from 'react-native';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -102,6 +104,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
   const imageItem = ({ item, index }: { item: ImageType; index: Number }) => (
     <TouchableOpacity
       key={item.uri}
+      // onPress={onPress}
       onPress={() => {
         actionSheetRef.current?.show();
         setSelectedImage({ item, index });
@@ -128,6 +131,7 @@ const ImageList = ({ images }: { images: ImageType }) => {
     <ScrollView>
       <FlatList data={images} renderItem={imageItem} numColumns={2} />
       <View style={styles.bottomSpace} />
+      
       {/* Action sheet */}
       <ActionSheet
         ref={actionSheetRef}

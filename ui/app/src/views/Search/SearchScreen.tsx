@@ -18,7 +18,7 @@ const SearchScreen = ({ route, navigation }) => {
   const goBackIcon = require('../../../assets/back.png');
   return (
     <View style={{ height: '100%' }}>
-      <Text style={{ fontSize: 20, textAlign: 'center' }}>{`There are ${
+      <Text style={{ fontSize: 20, textAlign: 'center' ,marginTop: HEIGHT / 20,}}>{`There are ${
         images.length
       } ${
         images.length === 1 ? 'result' : 'results'

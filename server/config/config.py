@@ -2,7 +2,8 @@ path_config = {
     'static_path': 'static/',
     # 'model_path': 'model/result.hdf5',
     'model_path': 'model/result_v2.hdf5',
-    # 'token_path': 'model/tokenizer.pkl',
+    'vi_model_path': 'model/best_model.h5',
+    'vi_token_path': 'model/tokenizer.pkl',
     'token_path': 'model/tokenizer_v2.pkl',
 }
 
