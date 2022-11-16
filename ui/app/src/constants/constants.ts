@@ -11,6 +11,8 @@ export const color = {
 };
 export const USER_ID = '1234';
 export const USER_ID_CAMERA = '12345';
+
 export const SERVER_URL = '127.0.0.1';
+
 export const WIDTH = Dimensions.get('window').width;
 export const HEIGHT = Dimensions.get('window').height;

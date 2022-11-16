@@ -6,7 +6,6 @@ import ImageList from '../../components/ImageList';
 import RoundButton from '../../components/RoundButton';
 import { HEIGHT } from '../../constants/constants';
 
-
 const SearchScreen = ({ route, navigation }) => {
   // state & variable
   let images = useSelector((state: RootState) => state.images);
