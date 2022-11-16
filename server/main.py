@@ -72,12 +72,13 @@ def start_socket(user_id: str, file_name: str, minio_client):
     bucket_name = s3_config.get("bucket_name")
     file_id = file_name.split(".")[0]
 
-    caption = generate_caption(user_id, file_name)
+    caption = generate_caption(user_id, file_name, 'en')
+    caption_vi = generate_caption(user_id, file_name, 'vi')
 
     imageURL = minio_client.presigned_get_object(bucket_name, file_name)
-    translation = translator.translate(caption, dest="vi")
+    # translation = translator.translate(caption, dest="vi")
 
-    caption_vi = translation.text
+    # caption_vi = translation.text
 
     audio_en_link = get_link_audio(caption, user_id, 'en', minio_client)
     audio_vi_link = get_link_audio(caption_vi, user_id, 'vi', minio_client)
