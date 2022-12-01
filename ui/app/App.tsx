@@ -29,7 +29,6 @@ const App = () => {
       setDisplayStartScreen(false);
     }, 1500);
   }, []);
-
   return (
     <Provider store={store}>
       {displayStartScreen && <StartScreen />}

@@ -22,14 +22,16 @@ tokenizer = load(open(tokenizer_path, "rb"))
 vi_tokenizer = load(open(vi_tokenizer_path, "rb"))
 
 # Max sequence length (from training)
-max_length = 40
-vi_max_length = 41
+max_length = 37
+vi_max_length = 46
 
 beam_search_k = 3
 
 # Load the model
 caption_model = load_model(model_path)
+caption_model.summary()
 vi_caption_model = load_model(vi_model_path)
+vi_caption_model.summary()
 
 
 image_model = CNNModel()

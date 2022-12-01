@@ -1,10 +1,9 @@
 path_config = {
     'static_path': 'static/',
-    # 'model_path': 'model/result.hdf5',
-    'model_path': 'model/result_v2.hdf5',
-    'vi_model_path': 'model/best_model.h5',
+    'model_path': 'model/khoi_eng_17.hdf5',
+    'vi_model_path': 'model/khoi-17.hdf5',
     'vi_token_path': 'model/tokenizer.pkl',
-    'token_path': 'model/tokenizer_v2.pkl',
+    'token_path': 'model/eng_tokenizer.pkl',
 }
 
 socket_config = {

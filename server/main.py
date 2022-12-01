@@ -96,5 +96,5 @@ def start_socket(user_id: str, file_name: str, minio_client):
 
     # send captions to client
     publish(client, f"captions/{user_id}", json.dumps(result))
-    print(f"captions/{user_id}")
+    print(f"captions/{user_id}", result)
     return
