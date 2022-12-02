@@ -40,7 +40,7 @@ from keras.layers import Input, Dense, Dropout, LSTM, Embedding, concatenate, Re
 
 def CNNModel(lang='en'):
 	model = InceptionV3(include_top=False, pooling='avg')
-	if lang=='en':
-		model=InceptionV3()
+	# if lang=='en':
+	# 	model=InceptionV3()
 	# model.summary()
 	return model

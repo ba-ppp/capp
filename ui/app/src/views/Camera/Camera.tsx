@@ -191,11 +191,9 @@ const MyCamera = ({ navigation }) => {
   const devices = useCameraDevices();
   const device = devices.back;
   const isFocused = useIsFocused();
-
   if (device == null) {
     return <Text>Loading</Text>;
   }
-
   return (
     <View style={styles.container}>
       {pathState === '' ? (

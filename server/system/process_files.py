@@ -80,5 +80,5 @@ def get_link_audio(caption: str, user_id: str, language: str, minio_client):
         )
 
     presign_url = minio_client.presigned_get_object(bucket_export_name, new_file_name)
-
+    print(presign_url)
     return presign_url

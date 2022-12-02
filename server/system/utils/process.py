@@ -9,10 +9,19 @@ def int_to_word(integer, tokenizer):
 
 def generate_caption_beam_search(model, tokenizer, image, max_length, beam_index=3):
 	# in_text --> [[idx,prob]] ;prob=0 initially
-	in_text = [[tokenizer.texts_to_sequences(['startseq'])[0], 0.0]]
+	in_text = [[tokenizer.texts_to_sequences(['startseq'])[0], 1.0]]
 	while len(in_text[0][0]) < max_length:
+		stop = True
+		for seq in in_text:
+			if not (3 in seq[0]):
+				stop = False
+		if stop:
+			break
 		tempList = []
 		for seq in in_text:
+			if 3 in seq[0]:
+				tempList.append(seq)
+				continue
 			padded_seq = tf.keras.utils.pad_sequences([seq[0]], maxlen=max_length)
 			preds = model.predict([image,padded_seq], verbose=0)
 			# Take top (i.e. which have highest probailities) `beam_index` predictions
@@ -22,7 +31,7 @@ def generate_caption_beam_search(model, tokenizer, image, max_length, beam_index
 				next_seq, prob = seq[0][:], seq[1]
 				next_seq.append(word)
 				# Update probability
-				prob += preds[0][word]
+				prob *= preds[0][word]
 				# Append as input for generating the next word
 				tempList.append([next_seq, prob])
 		in_text = tempList
